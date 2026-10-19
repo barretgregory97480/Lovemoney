@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lovemoney • Sanctuaire Ultime</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Pusher SDK officiel pour le temps réel -->
+    <!-- SDK Pusher officiel pour le temps réel -->
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
     <style>
         :root {
@@ -32,13 +32,17 @@
             --glow: rgba(157, 78, 221, 0.7);
         }
 
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Outfit', sans-serif;
             background: var(--bg-gradient);
             color: var(--text-main);
             margin: 0;
             padding: 16px;
-            padding-bottom: 100px;
+            padding-bottom: 110px;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -47,9 +51,13 @@
             position: relative;
         }
 
+        /* DECORATION ARRIÈRE-PLAN */
         .bg-decorations {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             pointer-events: none;
             z-index: 0;
             overflow: hidden;
@@ -64,10 +72,20 @@
         }
 
         @keyframes floatBackground {
-            0% { transform: translateY(105vh) rotate(0deg) scale(0.7); opacity: 0; }
-            20% { opacity: 0.8; }
-            80% { opacity: 0.8; }
-            100% { transform: translateY(-10vh) rotate(360deg) scale(1.3); opacity: 0; }
+            0% {
+                transform: translateY(105vh) rotate(0deg) scale(0.7);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.8;
+            }
+            80% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-10vh) rotate(360deg) scale(1.3);
+                opacity: 0;
+            }
         }
 
         .container {
@@ -78,13 +96,23 @@
             z-index: 1;
         }
 
-        header { text-align: center; margin-bottom: 24px; }
-        header h1 { 
-            color: var(--primary); 
-            font-size: 2.6rem; 
-            font-weight: 700; 
-            margin: 0 0 6px 0; 
-            text-shadow: 0 0 35px var(--glow), 0 0 10px rgba(255,255,255,0.4); 
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* EN-TÊTE */
+        header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        header h1 {
+            color: var(--primary);
+            font-size: 2.6rem;
+            font-weight: 700;
+            margin: 0 0 6px 0;
+            text-shadow: 0 0 35px var(--glow), 0 0 10px rgba(255,255,255,0.4);
             letter-spacing: -0.5px;
         }
 
@@ -126,6 +154,7 @@
             50% { transform: scale(1.25); }
         }
 
+        /* CARTE CONTENEUR */
         .card {
             background: var(--card-bg);
             backdrop-filter: blur(25px);
@@ -142,7 +171,14 @@
             box-shadow: 0 0 25px rgba(255, 23, 68, 0.4);
         }
 
-        .profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 15px; }
+        /* PROFIL & CONNEXION */
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 15px;
+        }
+
         .profile-card {
             background: rgba(255, 255, 255, 0.05);
             border: 2px solid var(--border-color);
@@ -153,117 +189,359 @@
             transition: all 0.3s ease;
             box-shadow: 0 8px 20px rgba(0,0,0,0.4);
         }
-        .profile-card:hover { border-color: var(--primary); background: var(--primary-light); transform: translateY(-4px); box-shadow: 0 12px 30px var(--glow); }
+
+        .profile-card:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px var(--glow);
+        }
 
         .top-bar {
-            display: flex; justify-content: space-between; align-items: center;
-            background: rgba(255, 255, 255, 0.06); border: 1px solid var(--border-color);
-            padding: 12px 18px; border-radius: 18px; margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border-color);
+            padding: 12px 18px;
+            border-radius: 18px;
+            margin-bottom: 16px;
             backdrop-filter: blur(10px);
         }
 
+        /* CAPITAL AMOUR */
         .balance-box {
             background: radial-gradient(circle at center, rgba(255,23,68,0.25) 0%, rgba(45,15,38,0.8) 100%);
-            border: 1.5px solid var(--border-color); border-radius: var(--border-radius);
-            padding: 26px; text-align: center; margin-bottom: 16px;
+            border: 1.5px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 26px;
+            text-align: center;
+            margin-bottom: 16px;
             box-shadow: inset 0 0 30px rgba(255,23,68,0.3), 0 15px 35px rgba(0,0,0,0.5);
         }
 
-        .balance-box .score { font-size: 3.6rem; font-weight: 700; color: var(--primary); text-shadow: 0 0 30px var(--glow); }
+        .balance-box .score {
+            font-size: 3.6rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-shadow: 0 0 30px var(--glow);
+        }
 
-        h2 { font-size: 1.15rem; color: var(--text-main); margin-top: 0; margin-bottom: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+        h2 {
+            font-size: 1.15rem;
+            color: var(--text-main);
+            margin-top: 0;
+            margin-bottom: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-        .form-group { margin-bottom: 14px; }
-        label { display: block; font-size: 0.85rem; margin-bottom: 6px; color: var(--text-muted); }
+        /* FORMULAIRES ET BOUTONS */
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+            color: var(--text-muted);
+        }
+
         input {
-            width: 100%; padding: 14px; border: 1.5px solid var(--border-color);
-            background: rgba(0, 0, 0, 0.5); border-radius: 16px; font-size: 1rem;
-            color: var(--text-main); box-sizing: border-box;
+            width: 100%;
+            padding: 14px;
+            border: 1.5px solid var(--border-color);
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 16px;
+            font-size: 1rem;
+            color: var(--text-main);
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            border-color: var(--primary);
         }
 
         .btn-primary {
             background: linear-gradient(135deg, var(--primary), var(--accent));
-            color: white; border: none; padding: 14px; border-radius: 16px;
-            width: 100%; font-weight: 600; font-size: 1rem; cursor: pointer;
-            box-shadow: 0 10px 30px var(--glow); transition: all 0.3s;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 16px;
+            width: 100%;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 10px 30px var(--glow);
+            transition: all 0.3s;
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
         }
 
         .btn-action {
-            background: var(--primary-light); color: var(--accent);
-            border: 1.5px solid var(--border-color); padding: 8px 14px;
-            border-radius: 14px; font-weight: 600; font-size: 0.85rem; cursor: pointer;
+            background: var(--primary-light);
+            color: var(--accent);
+            border: 1.5px solid var(--border-color);
+            padding: 8px 14px;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: all 0.2s;
         }
 
-        .btn-action:disabled { opacity: 0.4; cursor: not-allowed; }
+        .btn-action:hover {
+            background: var(--primary);
+            color: #fff;
+        }
 
-        .status-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 12px; }
+        /* GRILLE D'ÉTAT D'ESPRIT */
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
         .status-btn {
-            background: rgba(255, 255, 255, 0.05); border: 1.5px solid var(--border-color);
-            border-radius: 14px; padding: 10px 8px; text-align: center; cursor: pointer;
-            font-size: 0.8rem; color: var(--text-muted); transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1.5px solid var(--border-color);
+            border-radius: 14px;
+            padding: 12px 8px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            transition: all 0.3s;
         }
-        .status-btn.active { border-color: var(--primary); background: var(--primary-light); color: var(--text-main); font-weight: bold; box-shadow: 0 0 20px var(--glow); }
 
-        .item-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .item-row:last-child { border-bottom: none; }
-        .item-info h4 { margin: 0 0 2px 0; font-size: 0.95rem; }
-        .item-info p { margin: 0; font-size: 0.75rem; color: var(--text-muted); }
+        .status-btn:hover {
+            border-color: var(--primary);
+            background: rgba(255,255,255,0.1);
+        }
+
+        .status-btn.active {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            color: var(--text-main);
+            font-weight: bold;
+            box-shadow: 0 0 20px var(--glow);
+        }
+
+        /* RANGÉES D'ARTICLES ET BOUTIQUE */
+        .item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .item-row:last-child {
+            border-bottom: none;
+        }
+
+        .item-info {
+            flex: 1;
+            padding-right: 12px;
+        }
+
+        .item-info h4 {
+            margin: 0 0 2px 0;
+            font-size: 0.95rem;
+        }
+
+        .item-info p {
+            margin: 0;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.3;
+        }
+
+        .item-info span {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: var(--accent);
+            display: inline-block;
+            margin-top: 4px;
+        }
 
         .shop-category-title {
-            font-size: 0.78rem; font-weight: 700; color: var(--accent); margin: 18px 0 8px 0;
-            text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid var(--border-color);
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin: 18px 0 8px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--border-color);
             padding-bottom: 4px;
         }
 
+        /* NAVIGATION INFÉRIEURE */
         .bottom-nav {
-            position: fixed; bottom: 0; left: 0; width: 100%;
-            background: rgba(30, 8, 20, 0.95); backdrop-filter: blur(25px);
-            border-top: 1.5px solid var(--border-color); display: flex;
-            justify-content: space-around; padding: 12px 0; z-index: 1000;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(30, 8, 20, 0.95);
+            backdrop-filter: blur(25px);
+            border-top: 1.5px solid var(--border-color);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            z-index: 1000;
             box-shadow: 0 -10px 30px rgba(0,0,0,0.8);
         }
 
         .nav-item {
-            background: none; border: none; color: var(--text-muted);
-            font-size: 0.75rem; display: flex; flex-direction: column;
-            align-items: center; gap: 4px; cursor: pointer; flex: 1;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            flex: 1;
+            transition: all 0.2s;
         }
-        .nav-item.active { color: var(--primary); font-weight: 600; text-shadow: 0 0 10px var(--glow); }
 
-        .gift-box, .pending-box {
-            background: rgba(255, 183, 3, 0.12); border: 2px dashed rgba(255, 183, 3, 0.6);
-            border-radius: var(--border-radius); padding: 16px; margin-bottom: 16px;
+        .nav-item.active {
+            color: var(--primary);
+            font-weight: 600;
+            text-shadow: 0 0 10px var(--glow);
+        }
+
+        /* ENVELOPPES & NOTIFICATIONS */
+        .gift-box {
+            background: rgba(255, 183, 3, 0.12);
+            border: 2px dashed rgba(255, 183, 3, 0.6);
+            border-radius: var(--border-radius);
+            padding: 16px;
+            margin-bottom: 16px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.4);
         }
 
+        /* ROULETTE */
         .wheel-container {
-            position: relative; width: 150px; height: 150px; margin: 0 auto 16px auto;
-            border-radius: 50%; border: 6px solid var(--primary);
+            position: relative;
+            width: 160px;
+            height: 160px;
+            margin: 10px auto 20px auto;
+            border-radius: 50%;
+            border: 6px solid var(--primary);
             background: conic-gradient(#ff1744 0deg 72deg, #ffb703 72deg 144deg, #7c3aed 144deg 216deg, #db2777 216deg 288deg, #ea580c 288deg 360deg);
-            display: flex; align-items: center; justify-content: center; transition: transform 4.5s ease;
-            box-shadow: 0 0 25px var(--glow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 4.5s cubic-bezier(0.15, 0.9, 0.2, 1);
+            box-shadow: 0 0 30px var(--glow);
         }
-        .wheel-center { width: 40px; height: 40px; background: #0f050c; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-        .wheel-pointer { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 14px solid #fff; z-index: 10; }
 
-        .trophy-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .trophy-icon { font-size: 1.8rem; filter: drop-shadow(0 0 10px var(--glow)); }
-        .trophy-info { flex: 1; }
-        .trophy-info h4 { margin: 0; font-size: 0.9rem; }
-        .trophy-info p { margin: 2px 0 0 0; font-size: 0.75rem; color: var(--text-muted); }
-        .trophy-badge { font-size: 0.75rem; font-weight: bold; padding: 4px 8px; border-radius: 10px; background: rgba(255,255,255,0.06); border: 1.5px solid var(--border-color); }
-        .trophy-badge.unlocked { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: 0 0 15px var(--glow); }
+        .wheel-center {
+            width: 44px;
+            height: 44px;
+            background: #0f050c;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            border: 2px solid var(--border-color);
+        }
 
-        .history-list { max-height: 200px; overflow-y: auto; font-size: 0.8rem; }
-        .history-item { padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08); color: var(--text-muted); }
+        .wheel-pointer {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 16px solid #fff;
+            z-index: 10;
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5));
+        }
 
-        .hidden { display: none !important; }
+        /* TROPHÉES */
+        .trophy-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .trophy-icon {
+            font-size: 2rem;
+            filter: drop-shadow(0 0 10px var(--glow));
+        }
+
+        .trophy-info {
+            flex: 1;
+        }
+
+        .trophy-info h4 {
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        .trophy-info p {
+            margin: 2px 0 0 0;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        .trophy-badge {
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.06);
+            border: 1.5px solid var(--border-color);
+            color: var(--text-muted);
+        }
+
+        .trophy-badge.unlocked {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--glow);
+        }
+
+        /* HISTORIQUE */
+        .history-list {
+            max-height: 220px;
+            overflow-y: auto;
+            font-size: 0.82rem;
+            padding-right: 4px;
+        }
+
+        .history-item {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .hidden {
+            display: none !important;
+        }
     </style>
 </head>
 <body class="theme-maeva">
 
-    <!-- ARRIÈRE-PLAN ANIMÉ DE CŒURS ROMANTIQUES -->
+    <!-- DÉCORATIONS CŒURS FLOTTANTS -->
     <div class="bg-decorations">
         <div class="floating-heart-bg" style="left: 8%; animation-duration: 12s; animation-delay: 0s;">❤️</div>
         <div class="floating-heart-bg" style="left: 28%; animation-duration: 16s; animation-delay: 3s;">💖</div>
@@ -273,9 +551,9 @@
     </div>
 
     <div class="container">
+        <!-- EN-TÊTE PRINCIPAL -->
         <header>
             <h1>🔥 Lovemoney</h1>
-            
             <div class="romance-banner">
                 <div class="counter-text">
                     <span class="heart-beat">❤️</span> <span id="couple-counter">Calcul en cours...</span> <span class="heart-beat">❤️</span>
@@ -284,35 +562,35 @@
             </div>
         </header>
 
-        <!-- LOGIN -->
+        <!-- ÉCRAN 1 : SÉLECTION DU PROFIL -->
         <div id="screen-login" class="card" style="text-align: center; padding: 40px 20px;">
             <h2>Qui reprend le contrôle ?</h2>
             <div class="profile-grid">
                 <div class="profile-card" onclick="selectProfile('maeva')">
-                    <span style="font-size: 3.2rem;">👩‍🦰</span>
-                    <h3 style="margin: 12px 0 0 0;">Maëva</h3>
+                    <span style="font-size: 3.5rem;">👩‍🦰</span>
+                    <h3 style="margin: 12px 0 0 0; font-size: 1.2rem;">Maëva</h3>
                 </div>
                 <div class="profile-card" onclick="selectProfile('greg')">
-                    <span style="font-size: 3.2rem;">👨‍💻</span>
-                    <h3 style="margin: 12px 0 0 0;">Grégory</h3>
+                    <span style="font-size: 3.5rem;">👨‍💻</span>
+                    <h3 style="margin: 12px 0 0 0; font-size: 1.2rem;">Grégory</h3>
                 </div>
             </div>
         </div>
 
-        <!-- PIN -->
+        <!-- ÉCRAN 2 : CODE PIN -->
         <div id="screen-pin" class="card hidden" style="text-align: center;">
             <h2 id="pin-title">Code PIN</h2>
-            <p id="pin-subtitle" style="font-size: 0.85rem; color: var(--text-muted);"></p>
+            <p id="pin-subtitle" style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">Entrez votre code confidentiel à 4 chiffres</p>
             <div class="form-group">
-                <input type="password" id="pin-input" placeholder="••••" maxlength="6" style="text-align: center; font-size: 1.6rem; letter-spacing: 8px;">
+                <input type="password" id="pin-input" placeholder="••••" maxlength="6" style="text-align: center; font-size: 1.8rem; letter-spacing: 10px;">
             </div>
             <button class="btn-primary" onclick="submitPin()">Entrer dans le sanctuaire 🔓</button>
-            <button class="btn-action" style="margin-top: 12px; width: 100%; background: transparent; border: none; color: var(--text-muted);" onclick="backToLogin()">← Retour</button>
+            <button class="btn-action" style="margin-top: 14px; width: 100%; background: transparent; border: none; color: var(--text-muted);" onclick="backToLogin()">← Retour au choix des profils</button>
         </div>
 
-        <!-- APPLICATION PRINCIPALE -->
+        <!-- ÉCRAN 3 : APPLICATION PRINCIPALE -->
         <div id="screen-app" class="hidden">
-            
+            <!-- BARRE SUPÉRIEURE -->
             <div class="top-bar">
                 <span>Sanctuaire de <strong id="lbl-username"></strong></span>
                 <div style="display:flex; gap:8px;">
@@ -323,13 +601,14 @@
 
             <!-- ONGLET 1 : ACCUEIL -->
             <div id="tab-home" class="tab-content">
+                <!-- SCORE & CAPITAL -->
                 <div class="balance-box">
                     <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 600; letter-spacing: 1px;">Mon Capital Amour</span>
                     <div class="score" id="lbl-balance">0</div>
                     <small style="color: var(--accent); font-size: 0.85rem; font-weight: 500;">Lovemoney disponibles ✨</small>
                 </div>
 
-                <!-- ÉTAT D'ESPRIT DU MOMENT -->
+                <!-- ÉTAT D'ESPRIT EN DIRECT -->
                 <div class="card">
                     <h2>🌡️ Mon état d'esprit du moment</h2>
                     <div class="status-grid">
@@ -341,30 +620,25 @@
                         <div class="status-btn" id="st-solitude" onclick="setStatus('solitude')">🧘 Bes. de solitude</div>
                         <div class="status-btn" id="st-amour" onclick="setStatus('amour')" style="grid-column: span 2;">❤️ Besoin d'amour & douceur</div>
                     </div>
-                    <p id="partner-status-lbl" style="font-size:0.8rem; color:var(--accent); margin-top:10px; text-align:center;">L'autre n'a pas encore indiqué son état.</p>
+                    <p id="partner-status-lbl" style="font-size:0.85rem; color:var(--accent); margin-top:12px; text-align:center; font-weight: 600;">L'autre n'a pas encore indiqué son état.</p>
                 </div>
 
+                <!-- ENVELOPPES REÇUES -->
                 <div id="gift-section" class="gift-box hidden">
                     <h3 style="margin-top:0; font-size:0.95rem; color:#ffb703;">🎁 Une enveloppe secrète t'attend !</h3>
                     <div id="gift-list"></div>
                 </div>
 
-                <div id="pending-section" class="card pending-box hidden">
-                    <h3 style="margin-top:0; font-size:0.95rem; color:#ffb703;">🔔 Actions de l'autre à valider :</h3>
-                    <div id="pending-list"></div>
-                </div>
-
-                <!-- SONDAGE HEBDOMADAIRE -->
+                <!-- SONDAGE DU MOMENT -->
                 <div class="card" style="background: rgba(255, 138, 128, 0.1); border: 1.5px solid rgba(255, 138, 128, 0.4);">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                         <h2 style="margin:0;">💬 Sondage de la Semaine</h2>
                         <span style="background:var(--primary); color:#fff; font-size:0.75rem; padding:3px 8px; border-radius:10px; font-weight:700;">+15 PTS</span>
                     </div>
                     <p id="poll-question" style="font-size: 0.9rem; margin-bottom: 12px; color: var(--text-main); line-height: 1.4;">Chargement du sondage...</p>
-                    <div id="poll-options" style="display: flex; flex-direction: column; gap: 8px;"></div>
                 </div>
 
-                <!-- SOS TENSION -->
+                <!-- BOUTON SOS RÉCONCILIATION -->
                 <div class="card" style="background: linear-gradient(135deg, rgba(255, 23, 68, 0.25), rgba(157, 78, 221, 0.25)); border: 1.5px solid rgba(255,23,68,0.5);">
                     <h2>🚨 Protocole "Sauvons notre soirée"</h2>
                     <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">Un clic déclenche un rendez-vous obligatoire ce soir sans écran ni bouderie.</p>
@@ -377,73 +651,32 @@
                 <!-- ROULETTE INFERNALE -->
                 <div class="card" style="text-align: center; border: 2px dashed var(--accent);">
                     <h2>🎰 Roulette Infernale</h2>
-                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px;">1 tour par jour : gagne des points OU un gage complice !</p>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px;">1 tour par jour : gagne des points bonus !</p>
                     <div style="position: relative;">
                         <div class="wheel-pointer"></div>
                         <div id="roulette-wheel" class="wheel-container"><div class="wheel-center">🔥</div></div>
                     </div>
                     <button id="btn-spin" class="btn-primary" onclick="spinRoulette()">Tourner la roue 🎡</button>
-                    <small id="spin-warning" class="hidden" style="color: var(--accent); display: block; margin-top: 8px; font-weight: 600;">Déjà tourné aujourd'hui ! 😉</small>
                 </div>
 
-                <!-- ATTENTIONS INDIVIDUELLES POUR GÂTER L'AUTRE -->
+                <!-- PETITES ATTENTIONS EN AUTONOMIE -->
                 <div class="card">
                     <h2>❤️ Petites Attentions en Autonomie</h2>
-                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 14px;">Choses faites de ton côté pour lui faire plaisir (1x par jour max) :</p>
-                    
                     <div class="item-row">
-                        <div class="item-info">
-                            <h4>☕ Boisson / Encas surprise</h4>
-                            <p>Préparer son café/thé sans qu'il/elle demande</p>
-                            <span>+5 pts</span>
-                        </div>
-                        <button id="btn-m-drink" class="btn-action" onclick="completeDirectMission('drink', 'Boisson/Encas surprise', 5)">Valider</button>
+                        <div class="item-info"><h4>☕ Boisson / Encas surprise</h4><p>Préparer son café/thé sans qu'il/elle demande</p><span>+5 pts</span></div>
+                        <button class="btn-action" onclick="completeDirectMission('Boisson / Encas surprise', 5)">Valider</button>
                     </div>
-
                     <div class="item-row" style="margin-top: 8px;">
-                        <div class="item-info">
-                            <h4>🧹 Soulager une corvée</h4>
-                            <p>Prendre une tâche en charge à sa place</p>
-                            <span>+10 pts</span>
-                        </div>
-                        <button id="btn-m-chore" class="btn-action" onclick="completeDirectMission('chore', 'Soulager une corvée', 10)">Valider</button>
+                        <div class="item-info"><h4>🧹 Soulager une corvée</h4><p>Prendre une tâche en charge à sa place</p><span>+10 pts</span></div>
+                        <button class="btn-action" onclick="completeDirectMission('Soulager une corvée', 10)">Valider</button>
                     </div>
-
                     <div class="item-row" style="margin-top: 8px;">
-                        <div class="item-info">
-                            <h4>🧸 Mot doux ou attention cachée</h4>
-                            <p>Laisser un mot ou une petite surprise</p>
-                            <span>+5 pts</span>
-                        </div>
-                        <button id="btn-m-note" class="btn-action" onclick="completeDirectMission('note', 'Mot doux ou surprise', 5)">Valider</button>
+                        <div class="item-info"><h4>🧸 Mot doux ou surprise</h4><p>Laisser un petit mot ou une attention cachée</p><span>+5 pts</span></div>
+                        <button class="btn-action" onclick="completeDirectMission('Mot doux ou surprise', 5)">Valider</button>
                     </div>
                 </div>
 
-                <!-- MISSIONS DU JOUR -->
-                <div class="card">
-                    <h2>🎯 Missions Complicité & Séduction</h2>
-                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 14px;">Missions de couple tirées au sort chaque jour :</p>
-                    <div id="daily-missions-container">
-                        <div class="item-row">
-                            <div class="item-info">
-                                <h4>💋 Compliment sincère impromptu</h4>
-                                <p>Glisser un compliment inattendu durant la journée</p>
-                                <span>+10 pts</span>
-                            </div>
-                            <button class="btn-action" onclick="completeDirectMission('m_comp', 'Compliment sincère', 10)">Valider</button>
-                        </div>
-                        <div class="item-row" style="margin-top:8px;">
-                            <div class="item-info">
-                                <h4>🤗 Câlin prolongé de 30 secondes</h4>
-                                <p>S'étreindre au calme sans rien dire</p>
-                                <span>+15 pts</span>
-                            </div>
-                            <button class="btn-action" onclick="completeDirectMission('m_hug', 'Câlin 30 sec', 15)">Valider</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- MES TROPHÉES & SUCCÈS -->
+                <!-- TROPHÉES & SUCCÈS -->
                 <div class="card">
                     <h2>🏆 Trophées & Succès du Sanctuaire</h2>
                     <div id="trophies-list">
@@ -454,7 +687,7 @@
                         </div>
                         <div class="trophy-row">
                             <span class="trophy-icon">💌</span>
-                            <div class="trophy-info"><h4>Générosité</h4><p>Offrir une enveloppe de points à l'autre</p></div>
+                            <div class="trophy-info"><h4>Générosité</h4><p>Envoyer une première enveloppe de points</p></div>
                             <span class="trophy-badge" id="tr-gift">Verrouillé</span>
                         </div>
                         <div class="trophy-row">
@@ -462,117 +695,117 @@
                             <div class="trophy-info"><h4>Grand Capital</h4><p>Atteindre 500 Lovemoney</p></div>
                             <span class="trophy-badge" id="tr-500">Verrouillé</span>
                         </div>
+                        <div class="trophy-row">
+                            <span class="trophy-icon">🎰</span>
+                            <div class="trophy-info"><h4>Chanceux</h4><p>Faire tourner la Roulette Infernale</p></div>
+                            <span class="trophy-badge" id="tr-wheel">Verrouillé</span>
+                        </div>
+                        <div class="trophy-row">
+                            <span class="trophy-icon">🌡️</span>
+                            <div class="trophy-info"><h4>À l'écoute</h4><p>Mettre à jour son état d'esprit</p></div>
+                            <span class="trophy-badge" id="tr-status">Verrouillé</span>
+                        </div>
+                        <div class="trophy-row">
+                            <span class="trophy-icon">🎁</span>
+                            <div class="trophy-info"><h4>Premier Plaisir</h4><p>S'offrir un article de la boutique</p></div>
+                            <span class="trophy-badge" id="tr-shop">Verrouillé</span>
+                        </div>
                     </div>
-                </div>
-
-                <!-- DÉCLARER UN EFFORT LIBRE -->
-                <div class="card">
-                    <h2>🤝 Déclarer un effort libre</h2>
-                    <div class="form-group">
-                        <input type="text" id="custom-mission-text" placeholder="Ex: J'ai géré un truc important..." style="margin-bottom: 8px;">
-                    </div>
-                    <button class="btn-action" style="width: 100%; text-align: center; padding: 12px;" onclick="submitCustomMission()">Envoyer à l'autre pour validation ✨</button>
                 </div>
             </div>
 
-            <!-- ONGLET 3 : BOUTIQUE -->
+            <!-- ONGLET 3 : BOUTIQUE COMPLÈTE -->
             <div id="tab-shop" class="tab-content hidden">
                 <div class="card">
                     <h2>🎁 La Grande Boutique du Sanctuaire</h2>
                     
-                    <!-- CATEGORIE 1 -->
                     <div class="shop-category-title">✨ Petites Attentions & Douceurs</div>
                     <div class="item-row">
-                        <div class="item-info"><h4>🍫 Carte Blanche Gourmandise</h4><p>L'autre ramène ou prépare ta douceur préférée</p><span>50</span></div>
+                        <div class="item-info"><h4>🍫 Carte Blanche Gourmandise</h4><p>L'autre ramène ou prépare ta douceur préférée</p><span>50 pts</span></div>
                         <button class="btn-action" onclick="buyReward(50, 'Carte Blanche Gourmandise')">S'offrir</button>
                     </div>
                     <div class="item-row">
-                        <div class="item-info"><h4>📺 Contrôle Total de la TV</h4><p>Choix du film/programme ce soir sans débat</p><span>100</span></div>
+                        <div class="item-info"><h4>📺 Contrôle Total de la TV</h4><p>Choix du film ou programme ce soir sans débat</p><span>100 pts</span></div>
                         <button class="btn-action" onclick="buyReward(100, 'Contrôle Total de la TV')">S'offrir</button>
                     </div>
                     <div class="item-row">
-                        <div class="item-info"><h4>💤 Sieste Câline Ininterrompue</h4><p>45 min de calme absolu et câlins au lit</p><span>120</span></div>
+                        <div class="item-info"><h4>💤 Sieste Câline Ininterrompue</h4><p>45 min de calme absolu et câlins au lit</p><span>120 pts</span></div>
                         <button class="btn-action" onclick="buyReward(120, 'Sieste Câline Ininterrompue')">S'offrir</button>
                     </div>
                     <div class="item-row">
-                        <div class="item-info"><h4>☕ Petit-déj au lit royal</h4><p>Préparé et servi avec le sourire</p><span>150</span></div>
+                        <div class="item-info"><h4>☕ Petit-déj au lit royal</h4><p>Préparé et servi avec le sourire</p><span>150 pts</span></div>
                         <button class="btn-action" onclick="buyReward(150, 'Petit-déj au lit royal')">S'offrir</button>
                     </div>
 
-                    <!-- CATEGORIE 2 -->
                     <div class="shop-category-title">🧹 Services & Coup de Pouce</div>
                     <div class="item-row">
-                        <div class="item-info"><h4>💆 Massage Épaules / Pieds</h4><p>15 minutes de détente sur le canapé</p><span>200</span></div>
+                        <div class="item-info"><h4>💆 Massage Épaules / Pieds</h4><p>15 minutes de détente sur le canapé</p><span>200 pts</span></div>
                         <button class="btn-action" onclick="buyReward(200, 'Massage Épaules / Pieds')">S'offrir</button>
                     </div>
                     <div class="item-row">
-                        <div class="item-info"><h4>🍹 Barman à Domicile</h4><p>Service du cocktail/verre préféré servi au lit/salon</p><span>200</span></div>
+                        <div class="item-info"><h4>🍹 Barman à Domicile</h4><p>Service du cocktail/verre préféré au lit/salon</p><span>200 pts</span></div>
                         <button class="btn-action" onclick="buyReward(200, 'Barman à Domicile')">S'offrir</button>
                     </div>
                     <div class="item-row">
-                        <div class="item-info"><h4>🚗 Nettoyage de la Voiture</h4><p>Prise en charge de la voiture propre</p><span>250</span></div>
+                        <div class="item-info"><h4>🚗 Nettoyage de la Voiture</h4><p>Prise en charge de la voiture propre</p><span>250 pts</span></div>
                         <button class="btn-action" onclick="buyReward(250, 'Nettoyage de la Voiture')">S'offrir</button>
                     </div>
                     <div class="item-row">
-                        <div class="item-info"><h4>🧹 Joker "Zéro Corvée"</h4><p>L'autre gère toutes les tâches de la soirée</p><span>300</span></div>
+                        <div class="item-info"><h4>🧹 Joker "Zéro Corvée"</h4><p>L'autre gère toutes les tâches de la soirée</p><span>300 pts</span></div>
                         <button class="btn-action" onclick="buyReward(300, 'Joker Zéro Corvée')">S'offrir</button>
                     </div>
 
-                    <!-- CATEGORIE 3 -->
                     <div class="shop-category-title">🍷 Moments Amoureux & Évasions</div>
                     <div class="item-row">
-                        <div class="item-info"><h4>🍷 Dîner Tête-à-Tête</h4><p>Resto ou repas maison aux chandelles</p><span>1500</span></div>
+                        <div class="item-info"><h4>🍷 Dîner Tête-à-Tête</h4><p>Resto ou repas maison aux chandelles</p><span>1500 pts</span></div>
                         <button class="btn-action" onclick="buyReward(1500, 'Dîner Tête-à-Tête')">S'offrir</button>
                     </div>
                     <div class="item-row">
-                        <div class="item-info"><h4>🎬 Rendez-vous Ciné & Repas</h4><p>Sortie en amoureux sans parler du quotidien</p><span>1800</span></div>
+                        <div class="item-info"><h4>🎬 Rendez-vous Ciné & Repas</h4><p>Sortie en amoureux sans parler du quotidien</p><span>1800 pts</span></div>
                         <button class="btn-action" onclick="buyReward(1800, 'Rendez-vous Ciné & Repas')">S'offrir</button>
                     </div>
                     <div class="item-row">
-                        <div class="item-info"><h4>🏨 Nuit Hors de la Maison</h4><p>Coupure totale en amoureux (hôtel/gîte)</p><span>3500</span></div>
+                        <div class="item-info"><h4>🏨 Nuit Hors de la Maison</h4><p>Coupure totale en amoureux (hôtel/gîte)</p><span>3500 pts</span></div>
                         <button class="btn-action" onclick="buyReward(3500, 'Nuit Hors de la Maison')">S'offrir</button>
                     </div>
                 </div>
 
-                <!-- CATEGORIE SPÉCIALE : ZONE ROUGE & GRANDES ENVIES -->
+                <!-- ZONE ROUGE ET PASSION -->
                 <div class="card card-redzone">
                     <h2 style="color: #ff1744; text-shadow: 0 0 15px rgba(255,23,68,0.8);">🔥 Zone Rouge • Grandes Envies</h2>
-                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">Des jokers passionnés à sortir sans hésiter les jours de grande envie :</p>
-
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">Des jokers passionnés à sortir les jours de grande envie :</p>
+                    
                     <div class="item-row">
                         <div class="item-info">
                             <h4>💋 Rapide & Brûlant</h4>
-                            <p>Un moment passionné et spontané dans la journée</p>
-                            <span style="color: #ff1744;">350</span>
+                            <p>Moment passionné et spontané dans la journée</p>
+                            <span style="color: #ff1744;">350 pts</span>
                         </div>
                         <button class="btn-action" style="background: rgba(255,23,68,0.3); border-color: #ff1744; color: #fff;" onclick="buyReward(350, 'Rapide & Brûlant')">S'offrir 🔥</button>
                     </div>
-
                     <div class="item-row" style="margin-top: 8px;">
                         <div class="item-info">
                             <h4>🔞 Massage Érotique & Huiles</h4>
                             <p>Massage intégral aux huiles axé sur la sensualité</p>
-                            <span style="color: #ff1744;">600</span>
+                            <span style="color: #ff1744;">600 pts</span>
                         </div>
                         <button class="btn-action" style="background: rgba(255,23,68,0.3); border-color: #ff1744; color: #fff;" onclick="buyReward(600, 'Massage Érotique & Huiles')">S'offrir 🔥</button>
                     </div>
-
                     <div class="item-row" style="margin-top: 8px;">
                         <div class="item-info">
                             <h4>🎭 Fantasme / Scénario Secret</h4>
                             <p>Tester une idée, un jeu de rôle ou une envie choisie</p>
-                            <span style="color: #ff1744;">900</span>
+                            <span style="color: #ff1744;">900 pts</span>
                         </div>
                         <button class="btn-action" style="background: rgba(255,23,68,0.3); border-color: #ff1744; color: #fff;" onclick="buyReward(900, 'Fantasme / Scénario Secret')">S'offrir 🔥</button>
                     </div>
-
                     <div class="item-row" style="margin-top: 8px;">
                         <div class="item-info">
                             <h4>🗝️ Clés de la Chambre (Désir Total)</h4>
                             <p>Prise en charge totale : l'autre pilote la soirée à 100%</p>
-                            <span style="color: #ff1744;">1500</span>
+                            <span style="color: #ff1744;">1500 pts</span>
                         </div>
-                        <button class="btn-action" style="background: rgba(255,23,68,0.3); border-color: #ff1744; color: #fff;" onclick="buyReward(1500, 'Clés de la Chambre (Désir Total)')">S'offrir 🔥</button>
+                        <button class="btn-action" style="background: rgba(255,23,68,0.3); border-color: #ff1744; color: #fff;" onclick="buyReward(1500, 'Clés de la Chambre')">S'offrir 🔥</button>
                     </div>
                 </div>
             </div>
@@ -580,53 +813,64 @@
             <!-- ONGLET 4 : OFFRIR & HISTORIQUE -->
             <div id="tab-gift" class="tab-content hidden">
                 <div class="card">
-                    <h2>✨ Offrir une enveloppe de points</h2>
-                    <div class="form-group"><label>Montant :</label><input type="number" id="gift-amount" value="15" min="1"></div>
-                    <div class="form-group"><label>Mot doux :</label><input type="text" id="gift-reason" placeholder="Ex: Hâte de ce soir..."></div>
+                    <h2>✨ Offrir des points à l'autre</h2>
+                    <div class="form-group">
+                        <label>Montant en Lovemoney :</label>
+                        <input type="number" id="gift-amount" value="15" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label>Mot doux associé :</label>
+                        <input type="text" id="gift-reason" placeholder="Ex: Pour ton sourire aujourd'hui...">
+                    </div>
                     <button class="btn-primary" onclick="sendMysteryGift()">Envoyer l'enveloppe 💌</button>
                 </div>
 
                 <div class="card">
                     <h2>📜 Journal des efforts</h2>
-                    <div class="history-list" id="history-box"><div class="history-item">Aucune action récente.</div></div>
+                    <div class="history-list" id="history-box">
+                        <div class="history-item">Aucune action récente enregistrée.</div>
+                    </div>
                 </div>
             </div>
 
-            <!-- NAVIGATION DU BAS -->
+            <!-- NAVIGATION FIXE EN BAS -->
             <nav class="bottom-nav">
                 <button class="nav-item active" onclick="switchTab('home', this)">
-                    <span style="font-size: 1.3rem;">🏠</span><span>Accueil</span>
+                    <span style="font-size: 1.3rem;">🏠</span>
+                    <span>Accueil</span>
                 </button>
                 <button class="nav-item" onclick="switchTab('play', this)">
-                    <span style="font-size: 1.3rem;">🎰</span><span>Jeux</span>
+                    <span style="font-size: 1.3rem;">🎰</span>
+                    <span>Jeux</span>
                 </button>
                 <button class="nav-item" onclick="switchTab('shop', this)">
-                    <span style="font-size: 1.3rem;">🎁</span><span>Boutique</span>
+                    <span style="font-size: 1.3rem;">🎁</span>
+                    <span>Boutique</span>
                 </button>
                 <button class="nav-item" onclick="switchTab('gift', this)">
-                    <span style="font-size: 1.3rem;">💌</span><span>Offrir</span>
+                    <span style="font-size: 1.3rem;">💌</span>
+                    <span>Offrir</span>
                 </button>
             </nav>
         </div>
     </div>
 
-    <!-- LOGIQUE JAVASCRIPT COMPLÈTE & PUSHER TEMPS RÉEL -->
+    <!-- SCRIPT JAVASCRIPT ET TEMPS RÉEL PUSHER -->
     <script>
-        // CONFIGURATION PUSHER (TES ACCÈS)
+        // IDENTIFIANTS PUSHER CHANNELS
         const PUSHER_KEY = "a22d7f2dcbd1a070113b";
         const PUSHER_CLUSTER = "eu";
 
         const pusher = new Pusher(PUSHER_KEY, { cluster: PUSHER_CLUSTER });
         const channel = pusher.subscribe('lovemoney-sanctuary');
 
-        // ÉTAT DU JEU
+        // STRUCTURE DE STOCKAGE DE L'APPLICATION
         let state = JSON.parse(localStorage.getItem('lovemoney_master_state')) || {
             users: {
                 maeva: { balance: 100, pin: "1234", status: "" },
                 greg: { balance: 100, pin: "1234", status: "" }
             },
             gifts: [],
-            pendingActions: [],
             history: []
         };
 
@@ -636,7 +880,7 @@
 
         let currentUser = null;
 
-        // AUTHENTIFICATION & PROFIL
+        // GESTION PROFIL ET PIN
         function selectProfile(user) {
             currentUser = user;
             document.getElementById('screen-login').classList.add('hidden');
@@ -688,7 +932,7 @@
             btn.classList.add('active');
         }
 
-        // MISE À JOUR DE L'INTERFACE
+        // RAFFRAÎCHISSEMENT DE L'INTERFACE
         function updateUI() {
             if (!currentUser) return;
 
@@ -705,50 +949,62 @@
                 pLabel.innerText = `${partnerName} n'a pas encore indiqué son état.`;
             }
 
-            // Enveloppes
+            // Affichage des enveloppes reçues non réclamées
             const myGifts = state.gifts.filter(g => g.to === currentUser && !g.claimed);
             const giftSec = document.getElementById('gift-section');
             const giftList = document.getElementById('gift-list');
+            
             if (myGifts.length > 0) {
                 giftSec.classList.remove('hidden');
                 giftList.innerHTML = myGifts.map((g, idx) => `
-                    <div style="margin-bottom:8px;">
+                    <div style="margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
                         <span>💌 "${g.reason}" (+${g.amount} pts)</span>
-                        <button class="btn-action" style="margin-left:8px;" onclick="claimGift(${idx})">Ouvrir ✨</button>
+                        <button class="btn-action" onclick="claimGift(${idx})">Ouvrir ✨</button>
                     </div>
                 `).join('');
             } else {
                 giftSec.classList.add('hidden');
             }
 
-            // Trophée 500 points
+            // Déblocage visuel des trophées
             if (state.users[currentUser].balance >= 500) {
                 const tr = document.getElementById('tr-500');
                 if (tr) { tr.innerText = "Débloqué"; tr.classList.add('unlocked'); }
             }
+            if (state.gifts.some(g => g.from === currentUser)) {
+                const tr = document.getElementById('tr-gift');
+                if (tr) { tr.innerText = "Débloqué"; tr.classList.add('unlocked'); }
+            }
+            if (state.users[currentUser].status) {
+                const tr = document.getElementById('tr-status');
+                if (tr) { tr.innerText = "Débloqué"; tr.classList.add('unlocked'); }
+            }
 
-            // Historique
+            // Historique des actions
             const hBox = document.getElementById('history-box');
             if (state.history.length > 0) {
                 hBox.innerHTML = state.history.slice(-10).reverse().map(h => `<div class="history-item">${h}</div>`).join('');
             }
         }
 
-        // ÉTATS D'ESPRIT ET PUSHER
+        // ACTIONS UTILISATEUR
         function setStatus(stKey) {
             const labels = {
-                'forme': '⚡ En forme', 'fatigue': '🔋 Fatigué(e)', 'epuise': '💤 Épuisé(e)',
-                'triste': '🌧️ Triste / Bof', 'coquin': '🔥 Coquin(e)', 'solitude': '🧘 Bes. de solitude',
+                'forme': '⚡ En forme',
+                'fatigue': '🔋 Fatigué(e)',
+                'epuise': '💤 Épuisé(e)',
+                'triste': '🌧️ Triste / Bof',
+                'coquin': '🔥 Coquin(e)',
+                'solitude': '🧘 Bes. de solitude',
                 'amour': '❤️ Besoin d\'amour & douceur'
             };
-            const label = labels[stKey] || stKey;
-            state.users[currentUser].status = label;
+            state.users[currentUser].status = labels[stKey] || stKey;
             saveState();
             updateUI();
-            alert("Ton état d'esprit a été partagé !");
+            alert("Ton état d'esprit a été mis à jour et partagé !");
         }
 
-        function completeDirectMission(id, title, pts) {
+        function completeDirectMission(title, pts) {
             state.users[currentUser].balance += pts;
             state.history.push(`${currentUser === 'maeva' ? 'Maëva' : 'Grégory'} a validé : ${title} (+${pts} pts)`);
             saveState();
@@ -756,28 +1012,19 @@
             alert(`Bravo ! +${pts} Lovemoney remportés !`);
         }
 
-        function submitCustomMission() {
-            const input = document.getElementById('custom-mission-text');
-            const val = input.value.trim();
-            if (val) {
-                state.history.push(`${currentUser === 'maeva' ? 'Maëva' : 'Grégory'} déclare : "${val}"`);
-                input.value = '';
-                saveState();
-                updateUI();
-                alert("Effort soumis au journal !");
-            }
-        }
-
         function spinRoulette() {
             const wheel = document.getElementById('roulette-wheel');
             const bonus = Math.floor(Math.random() * 40) + 10;
             wheel.style.transform = `rotate(${Math.floor(Math.random() * 1000) + 720}deg)`;
+            
             setTimeout(() => {
                 state.users[currentUser].balance += bonus;
                 state.history.push(`${currentUser === 'maeva' ? 'Maëva' : 'Grégory'} a tourné la roue (+${bonus} pts)`);
+                const trW = document.getElementById('tr-wheel');
+                if (trW) { trW.innerText = "Débloqué"; trW.classList.add('unlocked'); }
                 saveState();
                 updateUI();
-                alert(`Résultat : +${bonus} Lovemoney ! 🎉`);
+                alert(`Résultat : +${bonus} Lovemoney remportés ! 🎉`);
             }, 4500);
         }
 
@@ -785,11 +1032,13 @@
             if (state.users[currentUser].balance >= cost) {
                 state.users[currentUser].balance -= cost;
                 state.history.push(`${currentUser === 'maeva' ? 'Maëva' : 'Grégory'} s'est offert : ${name} (-${cost} pts)`);
+                const trS = document.getElementById('tr-shop');
+                if (trS) { trS.innerText = "Débloqué"; trS.classList.add('unlocked'); }
                 saveState();
                 updateUI();
                 alert(`Félicitations ! Tu t'es offert : "${name}" ❤️`);
             } else {
-                alert("Pas assez de Lovemoney disponibles !");
+                alert("Solde de Lovemoney insuffisant pour cet achat !");
             }
         }
 
@@ -826,7 +1075,7 @@
             alert("🚨 Protocole Réconciliation activé ! Ce soir, zéro écran et zéro dispute ❤️");
         }
 
-        // COMPTEUR DE DEPUIS LE 26 MARS 2015
+        // CALCULATEUR DU NOMBRE DE JOURS ENSEMBLE (DEPUIS LE 26 MARS 2015)
         function updateCounter() {
             const start = new Date("2015-03-26");
             const now = new Date();
@@ -836,7 +1085,7 @@
         }
         updateCounter();
 
-        // QUESTION DU SONDAGE
+        // QUESTION DE SONDAGE PAR DÉFAUT
         const polls = [
             "Quelle est notre prochaine destination de rêve ?",
             "Quel est le petit plat maison que tu préfères ?",
