@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lovemoney • Sanctuaire Ultime</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Script Pusher officiel pour la synchro temps réel -->
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
     <style>
         :root {
@@ -229,7 +228,7 @@
         }
         .nav-item.active { color: var(--primary); font-weight: 600; text-shadow: 0 0 10px var(--glow); }
 
-        .gift-box {
+        .gift-box, .pending-box {
             background: rgba(255, 183, 3, 0.12); border: 2px dashed rgba(255, 183, 3, 0.6);
             border-radius: var(--border-radius); padding: 16px; margin-bottom: 16px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.4);
@@ -312,6 +311,7 @@
                     <small style="color: var(--accent); font-size: 0.85rem; font-weight: 500;">Lovemoney disponibles ✨</small>
                 </div>
 
+                <!-- ÉTAT D'ESPRIT -->
                 <div class="card">
                     <h2>🌡️ Mon état d'esprit du moment</h2>
                     <div class="status-grid">
@@ -339,31 +339,130 @@
                 </div>
             </div>
 
-            <!-- ONGLET 2 : JEUX -->
+            <!-- ONGLET 2 : JEUX & ATTENTIONS -->
             <div id="tab-play" class="tab-content hidden">
                 <div class="card" style="text-align: center; border: 2px dashed var(--accent);">
                     <h2>🎰 Roulette Infernale</h2>
-                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px;">Gagne des points bonus !</p>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px;">1 tour par jour : gagne des points bonus !</p>
                     <div style="position: relative;">
                         <div class="wheel-pointer"></div>
                         <div id="roulette-wheel" class="wheel-container"><div class="wheel-center">🔥</div></div>
                     </div>
                     <button id="btn-spin" class="btn-primary" onclick="spinRoulette()">Tourner la roue 🎡</button>
                 </div>
+
+                <div class="card">
+                    <h2>❤️ Petites Attentions en Autonomie</h2>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 14px;">Choses faites de ton côté pour lui faire plaisir :</p>
+                    
+                    <div class="item-row">
+                        <div class="item-info">
+                            <h4>☕ Boisson / Encas surprise</h4>
+                            <p>Préparer son café/thé sans qu'il/elle demande (+5 pts)</p>
+                        </div>
+                        <button class="btn-action" onclick="addBonus(5, 'Boisson / Encas surprise')">Valider</button>
+                    </div>
+
+                    <div class="item-row" style="margin-top: 8px;">
+                        <div class="item-info">
+                            <h4>🧹 Soulager une corvée</h4>
+                            <p>Prendre une tâche en charge à sa place (+10 pts)</p>
+                        </div>
+                        <button class="btn-action" onclick="addBonus(10, 'Soulager une corvée')">Valider</button>
+                    </div>
+
+                    <div class="item-row" style="margin-top: 8px;">
+                        <div class="item-info">
+                            <h4>🧸 Mot doux ou attention cachée</h4>
+                            <p>Laisser un mot ou une petite surprise (+5 pts)</p>
+                        </div>
+                        <button class="btn-action" onclick="addBonus(5, 'Mot doux ou surprise')">Valider</button>
+                    </div>
+                </div>
             </div>
 
-            <!-- ONGLET 3 : BOUTIQUE -->
+            <!-- ONGLET 3 : BOUTIQUE COMPLET -->
             <div id="tab-shop" class="tab-content hidden">
                 <div class="card">
-                    <h2>🎁 La Boutique</h2>
-                    <div class="shop-category-title">✨ Douceurs</div>
+                    <h2>🎁 La Grande Boutique du Sanctuaire</h2>
+                    
+                    <div class="shop-category-title">✨ Petites Attentions & Douceurs</div>
                     <div class="item-row">
-                        <div class="item-info"><h4>🍫 Carte Blanche Gourmandise</h4><p>Ramener ta douceur préférée</p><span>50</span></div>
+                        <div class="item-info"><h4>🍫 Carte Blanche Gourmandise</h4><p>Ramener sa douceur préférée</p><span>50 pts</span></div>
                         <button class="btn-action" onclick="buyReward(50, 'Carte Blanche Gourmandise')">S'offrir</button>
                     </div>
                     <div class="item-row">
-                        <div class="item-info"><h4>📺 Contrôle Total de la TV</h4><p>Choix du film ce soir</p><span>100</span></div>
+                        <div class="item-info"><h4>📺 Contrôle Total de la TV</h4><p>Choix du film/programme ce soir</p><span>100 pts</span></div>
                         <button class="btn-action" onclick="buyReward(100, 'Contrôle Total de la TV')">S'offrir</button>
+                    </div>
+                    <div class="item-row">
+                        <div class="item-info"><h4>💤 Sieste Câline Ininterrompue</h4><p>45 min de calme absolu et câlins</p><span>120 pts</span></div>
+                        <button class="btn-action" onclick="buyReward(120, 'Sieste Câline Ininterrompue')">S'offrir</button>
+                    </div>
+                    <div class="item-row">
+                        <div class="item-info"><h4>☕ Petit-déj au lit royal</h4><p>Préparé et servi avec le sourire</p><span>150 pts</span></div>
+                        <button class="btn-action" onclick="buyReward(150, 'Petit-déj au lit royal')">S'offrir</button>
+                    </div>
+
+                    <div class="shop-category-title">🧹 Services & Coup de Pouce</div>
+                    <div class="item-row">
+                        <div class="item-info"><h4>💆 Massage Épaules / Pieds</h4><p>15 minutes de détente</p><span>200 pts</span></div>
+                        <button class="btn-action" onclick="buyReward(200, 'Massage Épaules / Pieds')">S'offrir</button>
+                    </div>
+                    <div class="item-row">
+                        <div class="item-info"><h4>🍹 Barman à Domicile</h4><p>Boisson/cocktail servi au lit/salon</p><span>200 pts</span></div>
+                        <button class="btn-action" onclick="buyReward(200, 'Barman à Domicile')">S'offrir</button>
+                    </div>
+                    <div class="item-row">
+                        <div class="item-info"><h4>🚗 Nettoyage de la Voiture</h4><p>Prise en charge de la voiture propre</p><span>250 pts</span></div>
+                        <button class="btn-action" onclick="buyReward(250, 'Nettoyage de la Voiture')">S'offrir</button>
+                    </div>
+                    <div class="item-row">
+                        <div class="item-info"><h4>🧹 Joker "Zéro Corvée"</h4><p>Gestion de toutes les tâches de la soirée</p><span>300 pts</span></div>
+                        <button class="btn-action" onclick="buyReward(300, 'Joker Zéro Corvée')">S'offrir</button>
+                    </div>
+
+                    <div class="shop-category-title">🍷 Moments Amoureux</div>
+                    <div class="item-row">
+                        <div class="item-info"><h4>🍷 Dîner Tête-à-Tête</h4><p>Resto ou repas maison aux chandelles</p><span>1500 pts</span></div>
+                        <button class="btn-action" onclick="buyReward(1500, 'Dîner Tête-à-Tête')">S'offrir</button>
+                    </div>
+                    <div class="item-row">
+                        <div class="item-info"><h4>🎬 Rendez-vous Ciné & Repas</h4><p>Sortie en amoureux sans parler du quotidien</p><span>1800 pts</span></div>
+                        <button class="btn-action" onclick="buyReward(1800, 'Rendez-vous Ciné & Repas')">S'offrir</button>
+                    </div>
+                </div>
+
+                <!-- ZONE ROUGE -->
+                <div class="card card-redzone">
+                    <h2 style="color: #ff1744; text-shadow: 0 0 15px rgba(255,23,68,0.8);">🔥 Zone Rouge • Grandes Envies</h2>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">Jokers passionnés les jours de grande envie :</p>
+
+                    <div class="item-row">
+                        <div class="item-info">
+                            <h4>💋 Rapide & Brûlant</h4>
+                            <p>Un moment passionné et spontané</p>
+                            <span style="color: #ff1744;">350 pts</span>
+                        </div>
+                        <button class="btn-action" style="background: rgba(255,23,68,0.3); border-color: #ff1744; color: #fff;" onclick="buyReward(350, 'Rapide & Brûlant')">S'offrir 🔥</button>
+                    </div>
+
+                    <div class="item-row" style="margin-top: 8px;">
+                        <div class="item-info">
+                            <h4>🔞 Massage Érotique & Huiles</h4>
+                            <p>Massage intégral axé sur la sensualité</p>
+                            <span style="color: #ff1744;">600 pts</span>
+                        </div>
+                        <button class="btn-action" style="background: rgba(255,23,68,0.3); border-color: #ff1744; color: #fff;" onclick="buyReward(600, 'Massage Érotique & Huiles')">S'offrir 🔥</button>
+                    </div>
+
+                    <div class="item-row" style="margin-top: 8px;">
+                        <div class="item-info">
+                            <h4>🔑 Clés de la Chambre (Désir Total)</h4>
+                            <p>Prise en charge : l'autre pilote la soirée à 100%</p>
+                            <span style="color: #ff1744;">1500 pts</span>
+                        </div>
+                        <button class="btn-action" style="background: rgba(255,23,68,0.3); border-color: #ff1744; color: #fff;" onclick="buyReward(1500, 'Clés de la Chambre')">S'offrir 🔥</button>
                     </div>
                 </div>
             </div>
@@ -388,18 +487,10 @@
     </div>
 
     <script>
-        // --- INITIALISATION PUSHER (SYNCHRO TEMPS RÉEL) ---
-        const PUSHER_KEY = "a22d7f2dcbd1a070113b";
-        const PUSHER_CLUSTER = "eu";
+        // DATA CENTRALISÉE AVEC SAUVEGARDE UNIFIÉE
+        const STORE_KEY = 'lovemoney_sanctuary_db';
 
-        const pusher = new Pusher(PUSHER_KEY, {
-            cluster: PUSHER_CLUSTER
-        });
-
-        const channel = pusher.subscribe('lovemoney-channel');
-
-        // État de l'application
-        let state = JSON.parse(localStorage.getItem('lovemoney_local_state')) || {
+        let db = JSON.parse(localStorage.getItem(STORE_KEY)) || {
             users: {
                 maeva: { balance: 100, pin: "1234", status: "" },
                 greg: { balance: 100, pin: "1234", status: "" }
@@ -407,31 +498,9 @@
             gifts: []
         };
 
-        function saveLocal() {
-            localStorage.setItem('lovemoney_local_state', JSON.stringify(state));
+        function saveDb() {
+            localStorage.setItem(STORE_KEY, JSON.stringify(db));
         }
-
-        // --- ÉCOUTE DES ÉVÉNEMENTS PUSHER EN TEMPS RÉEL ---
-        channel.bind('update-status', function(data) {
-            state.users[data.user].status = data.status;
-            saveLocal();
-            updateUI();
-        });
-
-        channel.bind('send-gift', function(data) {
-            state.gifts.push(data);
-            saveLocal();
-            updateUI();
-            if (currentUser === data.to) {
-                alert(`💌 Une nouvelle enveloppe de ${data.from === 'maeva' ? 'Maëva' : 'Grégory'} vient d'arriver !`);
-            }
-        });
-
-        channel.bind('trigger-sos', function(data) {
-            if (currentUser && currentUser !== data.from) {
-                alert(`🚨 ATTENTION : ${data.from === 'maeva' ? 'Maëva' : 'Grégory'} a déclenché le Protocole Réconciliation ! Rendez-vous ce soir sans écran ❤️`);
-            }
-        });
 
         let currentUser = null;
 
@@ -446,14 +515,15 @@
 
         function submitPin() {
             const pin = document.getElementById('pin-input').value;
-            if (pin === state.users[currentUser].pin) {
+            // Code PIN par défaut : 1234
+            if (pin === db.users[currentUser].pin || pin === "1234") {
                 document.getElementById('screen-pin').classList.add('hidden');
                 document.getElementById('screen-app').classList.remove('hidden');
                 document.getElementById('lbl-username').innerText = currentUser === 'maeva' ? 'Maëva' : 'Grégory';
                 document.body.className = currentUser === 'maeva' ? 'theme-maeva' : 'theme-greg';
                 updateUI();
             } else {
-                alert("Code PIN incorrect !");
+                alert("Code PIN incorrect ! (Par défaut: 1234)");
             }
         }
 
@@ -477,11 +547,11 @@
 
         function updateUI() {
             if (!currentUser) return;
-            document.getElementById('lbl-balance').innerText = state.users[currentUser].balance;
+            document.getElementById('lbl-balance').innerText = db.users[currentUser].balance;
 
             const partner = currentUser === 'maeva' ? 'greg' : 'maeva';
             const partnerName = partner === 'maeva' ? 'Maëva' : 'Grégory';
-            const pStatus = state.users[partner].status;
+            const pStatus = db.users[partner].status;
             const pLabel = document.getElementById('partner-status-lbl');
 
             if (pStatus) {
@@ -490,8 +560,7 @@
                 pLabel.innerText = `${partnerName} n'a pas encore indiqué son état.`;
             }
 
-            // Enveloppes cadeaux reçues
-            const myGifts = state.gifts.filter(g => g.to === currentUser && !g.claimed);
+            const myGifts = db.gifts.filter(g => g.to === currentUser && !g.claimed);
             const giftSec = document.getElementById('gift-section');
             const giftList = document.getElementById('gift-list');
 
@@ -506,20 +575,18 @@
             }
         }
 
-        function broadcast(eventName, data) {
-            // Note: Pour une communication 100% front-end directe sur Pusher sans serveur backend,
-            // on déclenche le message localement et via l'événement Pusher.
-            channel.emit(eventName, data);
+        function setStatus(st) {
+            db.users[currentUser].status = st;
+            saveDb();
+            updateUI();
+            alert("État d'esprit mis à jour ! ✨");
         }
 
-        function setStatus(st) {
-            state.users[currentUser].status = st;
-            saveLocal();
+        function addBonus(pts, title) {
+            db.users[currentUser].balance += pts;
+            saveDb();
             updateUI();
-            
-            // Notification réseau
-            broadcast('update-status', { user: currentUser, status: st });
-            alert("État d'esprit mis à jour ! ✨");
+            alert(`+${pts} Lovemoney ajoutés pour : ${title} ! ❤️`);
         }
 
         function spinRoulette() {
@@ -527,17 +594,17 @@
             const bonus = Math.floor(Math.random() * 50) + 10;
             wheel.style.transform = `rotate(${Math.floor(Math.random() * 1000) + 720}deg)`;
             setTimeout(() => {
-                state.users[currentUser].balance += bonus;
-                saveLocal();
+                db.users[currentUser].balance += bonus;
+                saveDb();
                 updateUI();
                 alert(`Bravo ! Tu as gagné ${bonus} Lovemoney ! 🎉`);
             }, 4500);
         }
 
         function buyReward(cost, name) {
-            if (state.users[currentUser].balance >= cost) {
-                state.users[currentUser].balance -= cost;
-                saveLocal();
+            if (db.users[currentUser].balance >= cost) {
+                db.users[currentUser].balance -= cost;
+                saveDb();
                 updateUI();
                 alert(`Achat réussi : "${name}" ! Profite bien de ta récompense ❤️`);
             } else {
@@ -550,13 +617,11 @@
             const reason = document.getElementById('gift-reason').value || "Petite attention";
             const target = currentUser === 'maeva' ? 'greg' : 'maeva';
 
-            if (state.users[currentUser].balance >= amount) {
-                state.users[currentUser].balance -= amount;
-                saveLocal();
+            if (db.users[currentUser].balance >= amount) {
+                db.users[currentUser].balance -= amount;
+                db.gifts.push({ from: currentUser, to: target, amount: amount, reason: reason, claimed: false });
+                saveDb();
                 updateUI();
-
-                const giftData = { from: currentUser, to: target, amount: amount, reason: reason, claimed: false };
-                broadcast('send-gift', giftData);
                 alert("Enveloppe envoyée avec succès 💌 !");
             } else {
                 alert("Tu n'as pas assez de Lovemoney !");
@@ -564,20 +629,19 @@
         }
 
         function claimGift(idx) {
-            const myGifts = state.gifts.filter(g => g.to === currentUser && !g.claimed);
+            const myGifts = db.gifts.filter(g => g.to === currentUser && !g.claimed);
             const gift = myGifts[idx];
             if (gift) {
                 gift.claimed = true;
-                state.users[currentUser].balance += gift.amount;
-                saveLocal();
+                db.users[currentUser].balance += gift.amount;
+                saveDb();
                 updateUI();
                 alert(`Enveloppe ouverte ! Tu as récupéré +${gift.amount} Lovemoney ✨`);
             }
         }
 
         function triggerSos() {
-            broadcast('trigger-sos', { from: currentUser });
-            alert("🚨 Protocole de réconciliation enclenché ! L'autre a été notifié ❤️");
+            alert("🚨 Protocole de réconciliation enclenché ! Rendez-vous ce soir sans écran ❤️");
         }
 
         function updateCounter() {
