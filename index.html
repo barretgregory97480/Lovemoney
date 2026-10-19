@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lovemoney • Sanctuaire Ultime</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- SDK Pusher -->
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
     <style>
         :root {
@@ -49,6 +48,7 @@
             position: relative;
         }
 
+        /* DÉCORATIONS CŒURS FLOTTANTS DANS LE FOND */
         .bg-decorations {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -60,8 +60,8 @@
         .floating-heart-bg {
             position: absolute;
             color: rgba(255, 107, 139, 0.25);
-            font-size: 2.5rem;
-            animation: floatBackground 10s infinite linear;
+            font-size: 2.2rem;
+            animation: floatBackground 12s infinite linear;
             filter: drop-shadow(0 0 10px rgba(255, 23, 68, 0.4));
         }
 
@@ -242,7 +242,7 @@
             border-radius: var(--border-radius); padding: 16px; margin-bottom: 16px;
         }
 
-        /* ROULETTE & LÉGENDE DES COULEURS */
+        /* ROULETTE & LÉGENDE EXPLICATIVE */
         .wheel-container {
             position: relative; width: 170px; height: 170px; margin: 15px auto;
             border-radius: 50%; border: 6px solid var(--primary);
@@ -291,12 +291,14 @@
 </head>
 <body class="theme-maeva">
 
+    <!-- FOND ANIMÉ AVEC CŒURS -->
     <div class="bg-decorations">
-        <div class="floating-heart-bg" style="left: 8%; animation-duration: 12s;">❤️</div>
-        <div class="floating-heart-bg" style="left: 28%; animation-duration: 16s;">💖</div>
-        <div class="floating-heart-bg" style="left: 52%; animation-duration: 11s;">✨</div>
-        <div class="floating-heart-bg" style="left: 74%; animation-duration: 14s;">💋</div>
-        <div class="floating-heart-bg" style="left: 88%; animation-duration: 13s;">🔥</div>
+        <div class="floating-heart-bg" style="left: 6%; animation-duration: 11s;">❤️</div>
+        <div class="floating-heart-bg" style="left: 22%; animation-duration: 15s;">💖</div>
+        <div class="floating-heart-bg" style="left: 45%; animation-duration: 10s;">✨</div>
+        <div class="floating-heart-bg" style="left: 68%; animation-duration: 13s;">💋</div>
+        <div class="floating-heart-bg" style="left: 85%; animation-duration: 12s;">🔥</div>
+        <div class="floating-heart-bg" style="left: 92%; animation-duration: 16s;">💕</div>
     </div>
 
     <div class="container">
@@ -401,6 +403,7 @@
                         <div id="roulette-wheel" class="wheel-container"><div class="wheel-center">🎰</div></div>
                     </div>
 
+                    <!-- LÉGENDE EXPLICATIVE DE LA ROULETTE -->
                     <div class="wheel-legend">
                         <div class="legend-item"><div class="legend-color" style="background:#ff1744;"></div><span><strong>Rouge :</strong> +50 PTS / Défi coquin</span></div>
                         <div class="legend-item"><div class="legend-color" style="background:#ffb703;"></div><span><strong>Jaune :</strong> +25 PTS Boost</span></div>
@@ -412,6 +415,7 @@
                     <button class="btn-primary" onclick="spinRoulette()">Lancer la Roulette 🎡</button>
                 </div>
 
+                <!-- PETITES ATTENTIONS (PLUS DE DIVERSITÉ) -->
                 <div class="card">
                     <h2>❤️ Petites Attentions du Quotidien</h2>
                     <div class="item-row">
@@ -434,8 +438,17 @@
                         <div class="item-info"><h4>🎒 Préparer ses affaires</h4><p>Préparer son sac ou ses clés</p><span>+10 pts</span></div>
                         <button class="btn-action" onclick="completeDirectMission('Préparer ses affaires', 10)">Valider</button>
                     </div>
+                    <div class="item-row">
+                        <div class="item-info"><h4>💌 Petit mot doux caché</h4><p>Laisser un mot inattendu</p><span>+10 pts</span></div>
+                        <button class="btn-action" onclick="completeDirectMission('Petit mot doux caché', 10)">Valider</button>
+                    </div>
+                    <div class="item-row">
+                        <div class="item-info"><h4>💋 Bisou surprise spontané</h4><p>Un baiser sans raison particulière</p><span>+5 pts</span></div>
+                        <button class="btn-action" onclick="completeDirectMission('Bisou surprise spontané', 5)">Valider</button>
+                    </div>
                 </div>
 
+                <!-- TROPHÉES ENRICHIS -->
                 <div class="card">
                     <h2>🏆 Trophées & Succès du Sanctuaire</h2>
                     <div id="trophies-list">
@@ -446,6 +459,8 @@
                         <div class="trophy-row"><span class="trophy-icon">👑</span><div class="trophy-info"><h4>Grand Capital</h4><p>Atteindre 500 Lovemoney</p></div><span class="trophy-badge" id="tr-500">Verrouillé</span></div>
                         <div class="trophy-row"><span class="trophy-icon">🍫</span><div class="trophy-info"><h4>Gourmand de la Vie</h4><p>S'offrir un plaisir dans la boutique</p></div><span class="trophy-badge" id="tr-shop">Verrouillé</span></div>
                         <div class="trophy-row"><span class="trophy-icon">🌡️</span><div class="trophy-info"><h4>Transparence Totale</h4><p>Partager son état d'esprit</p></div><span class="trophy-badge" id="tr-status">Verrouillé</span></div>
+                        <div class="trophy-row"><span class="trophy-icon">⚡</span><div class="trophy-info"><h4>Actif du Quotidien</h4><p>Valider au moins 3 petites attentions</p></div><span class="trophy-badge" id="tr-active">Verrouillé</span></div>
+                        <div class="trophy-row"><span class="trophy-icon">🚨</span><div class="trophy-info"><h4>Protecteur du Couple</h4><p>Déclencher le protocole de réconciliation SOS</p></div><span class="trophy-badge" id="tr-sos">Verrouillé</span></div>
                     </div>
                 </div>
             </div>
@@ -514,8 +529,8 @@
 
         let state = JSON.parse(localStorage.getItem('lovemoney_master_state')) || {
             users: {
-                maeva: { balance: 0, pin: "1234", status: "", pollAnswered: false, selectedPollOpt: null },
-                greg: { balance: 0, pin: "1234", status: "", pollAnswered: false, selectedPollOpt: null }
+                maeva: { balance: 0, pin: "1234", status: "", pollAnswered: false, selectedPollOpt: null, missionsDone: 0, sosTriggered: false },
+                greg: { balance: 0, pin: "1234", status: "", pollAnswered: false, selectedPollOpt: null, missionsDone: 0, sosTriggered: false }
             },
             gifts: [],
             history: []
@@ -609,11 +624,13 @@
                 giftSec.classList.add('hidden');
             }
 
-            // Trophées
+            // Gestion des trophées débloqués
             if (state.users[currentUser].balance >= 500) { const tr = document.getElementById('tr-500'); if (tr) { tr.innerText = "Débloqué"; tr.classList.add('unlocked'); } }
             if (state.gifts.some(g => g.from === currentUser)) { const tr = document.getElementById('tr-gift'); if (tr) { tr.innerText = "Débloqué"; tr.classList.add('unlocked'); } }
             if (state.users[currentUser].status) { const tr = document.getElementById('tr-status'); if (tr) { tr.innerText = "Débloqué"; tr.classList.add('unlocked'); } }
             if (state.users[currentUser].pollAnswered) { const tr = document.getElementById('tr-poll'); if (tr) { tr.innerText = "Débloqué"; tr.classList.add('unlocked'); } }
+            if (state.users[currentUser].missionsDone >= 3) { const tr = document.getElementById('tr-active'); if (tr) { tr.innerText = "Débloqué"; tr.classList.add('unlocked'); } }
+            if (state.users[currentUser].sosTriggered) { const tr = document.getElementById('tr-sos'); if (tr) { tr.innerText = "Débloqué"; tr.classList.add('unlocked'); } }
 
             const hBox = document.getElementById('history-box');
             if (state.history.length > 0) {
@@ -621,13 +638,15 @@
             }
         }
 
-        // SONDAGE
+        // SONDAGE EN DUO (5 PROPOSITIONS VARIÉES)
         const pollData = {
             question: "Quelle est notre prochaine escapade idéale ce mois-ci ?",
             options: [
                 "🌴 Un week-end détente en gîte / hôtel",
                 "🍽️ Un grand restaurant gastronomique",
-                "🎬 Une soirée cocooning cinéma & snacks au lit"
+                "🎬 Une soirée cocooning cinéma & snacks au lit",
+                "🌅 Une balade au coucher de soleil sur la plage",
+                "🎲 Une soirée jeux de société & tapas à la maison"
             ]
         };
 
@@ -682,6 +701,7 @@
 
         function completeDirectMission(title, pts) {
             state.users[currentUser].balance += pts;
+            state.users[currentUser].missionsDone = (state.users[currentUser].missionsDone || 0) + 1;
             state.history.push(`${currentUser === 'maeva' ? 'Maëva' : 'Grégory'} a validé : ${title} (+${pts} pts)`);
             saveState();
             updateUI();
@@ -757,6 +777,9 @@
         }
 
         function triggerSos() {
+            state.users[currentUser].sosTriggered = true;
+            saveState();
+            updateUI();
             alert("🚨 Protocole Réconciliation activé ! Ce soir, zéro écran et zéro dispute ❤️");
         }
 
