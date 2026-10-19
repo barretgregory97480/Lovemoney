@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lovemoney • Sanctuaire Ultime</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- SDK Pusher officiel pour le temps réel -->
+    <!-- Pusher SDK officiel pour la synchronisation temps réel -->
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
     <style>
         :root {
@@ -51,7 +51,7 @@
             position: relative;
         }
 
-        /* DECORATION ARRIÈRE-PLAN */
+        /* DÉCORATIONS D'ARRIÈRE-PLAN ANIMÉES */
         .bg-decorations {
             position: fixed;
             top: 0;
@@ -154,7 +154,7 @@
             50% { transform: scale(1.25); }
         }
 
-        /* CARTE CONTENEUR */
+        /* CARTES ET CONTENEURS */
         .card {
             background: var(--card-bg);
             backdrop-filter: blur(25px);
@@ -171,7 +171,7 @@
             box-shadow: 0 0 25px rgba(255, 23, 68, 0.4);
         }
 
-        /* PROFIL & CONNEXION */
+        /* CONNEXION ET PROFILS */
         .profile-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -238,7 +238,7 @@
             gap: 8px;
         }
 
-        /* FORMULAIRES ET BOUTONS */
+        /* FORMULAIRES & BOUTONS */
         .form-group {
             margin-bottom: 14px;
         }
@@ -281,10 +281,6 @@
             transition: all 0.3s;
         }
 
-        .btn-primary:active {
-            transform: scale(0.98);
-        }
-
         .btn-action {
             background: var(--primary-light);
             color: var(--accent);
@@ -303,7 +299,7 @@
             color: #fff;
         }
 
-        /* GRILLE D'ÉTAT D'ESPRIT */
+        /* ÉTAT D'ESPRIT */
         .status-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -328,15 +324,7 @@
             background: rgba(255,255,255,0.1);
         }
 
-        .status-btn.active {
-            border-color: var(--primary);
-            background: var(--primary-light);
-            color: var(--text-main);
-            font-weight: bold;
-            box-shadow: 0 0 20px var(--glow);
-        }
-
-        /* RANGÉES D'ARTICLES ET BOUTIQUE */
+        /* RANGÉES D'ARTICLES & BOUTIQUE */
         .item-row {
             display: flex;
             justify-content: space-between;
@@ -385,7 +373,7 @@
             padding-bottom: 4px;
         }
 
-        /* NAVIGATION INFÉRIEURE */
+        /* NAVIGATION INFÉRIEURE FIXE */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -421,7 +409,7 @@
             text-shadow: 0 0 10px var(--glow);
         }
 
-        /* ENVELOPPES & NOTIFICATIONS */
+        /* ENVELOPPES */
         .gift-box {
             background: rgba(255, 183, 3, 0.12);
             border: 2px dashed rgba(255, 183, 3, 0.6);
@@ -431,7 +419,7 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.4);
         }
 
-        /* ROULETTE */
+        /* ROULETTE INFERNALE */
         .wheel-container {
             position: relative;
             width: 160px;
@@ -470,10 +458,9 @@
             border-right: 8px solid transparent;
             border-bottom: 16px solid #fff;
             z-index: 10;
-            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5));
         }
 
-        /* TROPHÉES */
+        /* TROPHÉES & SUCCÈS */
         .trophy-row {
             display: flex;
             align-items: center;
@@ -519,12 +506,30 @@
             box-shadow: 0 0 15px var(--glow);
         }
 
+        /* SONDAGE INTERACTIF */
+        .poll-option-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1.5px solid var(--border-color);
+            padding: 10px 14px;
+            border-radius: 12px;
+            color: var(--text-main);
+            font-size: 0.85rem;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s;
+            width: 100%;
+        }
+
+        .poll-option-btn:hover {
+            background: var(--primary-light);
+            border-color: var(--primary);
+        }
+
         /* HISTORIQUE */
         .history-list {
             max-height: 220px;
             overflow-y: auto;
             font-size: 0.82rem;
-            padding-right: 4px;
         }
 
         .history-item {
@@ -541,56 +546,55 @@
 </head>
 <body class="theme-maeva">
 
-    <!-- DÉCORATIONS CŒURS FLOTTANTS -->
+    <!-- CŒURS FLOTTANTS EN ARRIÈRE-PLAN -->
     <div class="bg-decorations">
-        <div class="floating-heart-bg" style="left: 8%; animation-duration: 12s; animation-delay: 0s;">❤️</div>
-        <div class="floating-heart-bg" style="left: 28%; animation-duration: 16s; animation-delay: 3s;">💖</div>
-        <div class="floating-heart-bg" style="left: 52%; animation-duration: 11s; animation-delay: 1s;">✨</div>
-        <div class="floating-heart-bg" style="left: 74%; animation-duration: 14s; animation-delay: 4s;">💋</div>
-        <div class="floating-heart-bg" style="left: 88%; animation-duration: 13s; animation-delay: 2s;">🔥</div>
+        <div class="floating-heart-bg" style="left: 8%; animation-duration: 12s;">❤️</div>
+        <div class="floating-heart-bg" style="left: 28%; animation-duration: 16s;">💖</div>
+        <div class="floating-heart-bg" style="left: 52%; animation-duration: 11s;">✨</div>
+        <div class="floating-heart-bg" style="left: 74%; animation-duration: 14s;">💋</div>
+        <div class="floating-heart-bg" style="left: 88%; animation-duration: 13s;">🔥</div>
     </div>
 
     <div class="container">
-        <!-- EN-TÊTE PRINCIPAL -->
+        <!-- EN-TÊTE -->
         <header>
             <h1>🔥 Lovemoney</h1>
             <div class="romance-banner">
                 <div class="counter-text">
                     <span class="heart-beat">❤️</span> <span id="couple-counter">Calcul en cours...</span> <span class="heart-beat">❤️</span>
                 </div>
-                <div class="quote-text" id="daily-quote">"Chaque jour est une nouvelle occasion de se redécouvrir." ✨</div>
+                <div class="quote-text">"Chaque jour est une nouvelle occasion de se redécouvrir." ✨</div>
             </div>
         </header>
 
-        <!-- ÉCRAN 1 : SÉLECTION DU PROFIL -->
+        <!-- 1. ÉCRAN DE SÉLECTION DU PROFIL -->
         <div id="screen-login" class="card" style="text-align: center; padding: 40px 20px;">
             <h2>Qui reprend le contrôle ?</h2>
             <div class="profile-grid">
                 <div class="profile-card" onclick="selectProfile('maeva')">
                     <span style="font-size: 3.5rem;">👩‍🦰</span>
-                    <h3 style="margin: 12px 0 0 0; font-size: 1.2rem;">Maëva</h3>
+                    <h3 style="margin: 12px 0 0;">Maëva</h3>
                 </div>
                 <div class="profile-card" onclick="selectProfile('greg')">
                     <span style="font-size: 3.5rem;">👨‍💻</span>
-                    <h3 style="margin: 12px 0 0 0; font-size: 1.2rem;">Grégory</h3>
+                    <h3 style="margin: 12px 0 0;">Grégory</h3>
                 </div>
             </div>
         </div>
 
-        <!-- ÉCRAN 2 : CODE PIN -->
+        <!-- 2. ÉCRAN DU CODE PIN -->
         <div id="screen-pin" class="card hidden" style="text-align: center;">
             <h2 id="pin-title">Code PIN</h2>
-            <p id="pin-subtitle" style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">Entrez votre code confidentiel à 4 chiffres</p>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">Entrez votre code confidentiel</p>
             <div class="form-group">
                 <input type="password" id="pin-input" placeholder="••••" maxlength="6" style="text-align: center; font-size: 1.8rem; letter-spacing: 10px;">
             </div>
             <button class="btn-primary" onclick="submitPin()">Entrer dans le sanctuaire 🔓</button>
-            <button class="btn-action" style="margin-top: 14px; width: 100%; background: transparent; border: none; color: var(--text-muted);" onclick="backToLogin()">← Retour au choix des profils</button>
+            <button class="btn-action" style="margin-top: 14px; width: 100%; background: transparent; border: none; color: var(--text-muted);" onclick="backToLogin()">← Retour</button>
         </div>
 
-        <!-- ÉCRAN 3 : APPLICATION PRINCIPALE -->
+        <!-- 3. APPLICATION PRINCIPALE -->
         <div id="screen-app" class="hidden">
-            <!-- BARRE SUPÉRIEURE -->
             <div class="top-bar">
                 <span>Sanctuaire de <strong id="lbl-username"></strong></span>
                 <div style="display:flex; gap:8px;">
@@ -601,24 +605,23 @@
 
             <!-- ONGLET 1 : ACCUEIL -->
             <div id="tab-home" class="tab-content">
-                <!-- SCORE & CAPITAL -->
                 <div class="balance-box">
                     <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 600; letter-spacing: 1px;">Mon Capital Amour</span>
                     <div class="score" id="lbl-balance">0</div>
-                    <small style="color: var(--accent); font-size: 0.85rem; font-weight: 500;">Lovemoney disponibles ✨</small>
+                    <small style="color: var(--accent); font-size: 0.85rem;">Lovemoney disponibles ✨</small>
                 </div>
 
-                <!-- ÉTAT D'ESPRIT EN DIRECT -->
+                <!-- ÉTAT D'ESPRIT -->
                 <div class="card">
                     <h2>🌡️ Mon état d'esprit du moment</h2>
                     <div class="status-grid">
-                        <div class="status-btn" id="st-forme" onclick="setStatus('forme')">⚡ En forme</div>
-                        <div class="status-btn" id="st-fatigue" onclick="setStatus('fatigue')">🔋 Fatigué(e)</div>
-                        <div class="status-btn" id="st-epuise" onclick="setStatus('epuise')">💤 Épuisé(e)</div>
-                        <div class="status-btn" id="st-triste" onclick="setStatus('triste')">🌧️ Triste / "Bof"</div>
-                        <div class="status-btn" id="st-coquin" onclick="setStatus('coquin')">🔥 Coquin(e)</div>
-                        <div class="status-btn" id="st-solitude" onclick="setStatus('solitude')">🧘 Bes. de solitude</div>
-                        <div class="status-btn" id="st-amour" onclick="setStatus('amour')" style="grid-column: span 2;">❤️ Besoin d'amour & douceur</div>
+                        <div class="status-btn" onclick="setStatus('forme')">⚡ En forme</div>
+                        <div class="status-btn" onclick="setStatus('fatigue')">🔋 Fatigué(e)</div>
+                        <div class="status-btn" onclick="setStatus('epuise')">💤 Épuisé(e)</div>
+                        <div class="status-btn" onclick="setStatus('triste')">🌧️ Triste / "Bof"</div>
+                        <div class="status-btn" onclick="setStatus('coquin')">🔥 Coquin(e)</div>
+                        <div class="status-btn" onclick="setStatus('solitude')">🧘 Bes. de solitude</div>
+                        <div class="status-btn" onclick="setStatus('amour')" style="grid-column: span 2;">❤️ Besoin d'amour & douceur</div>
                     </div>
                     <p id="partner-status-lbl" style="font-size:0.85rem; color:var(--accent); margin-top:12px; text-align:center; font-weight: 600;">L'autre n'a pas encore indiqué son état.</p>
                 </div>
@@ -629,26 +632,26 @@
                     <div id="gift-list"></div>
                 </div>
 
-                <!-- SONDAGE DU MOMENT -->
+                <!-- SONDAGE DE LA SEMAINE INTERACTIF -->
                 <div class="card" style="background: rgba(255, 138, 128, 0.1); border: 1.5px solid rgba(255, 138, 128, 0.4);">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                         <h2 style="margin:0;">💬 Sondage de la Semaine</h2>
                         <span style="background:var(--primary); color:#fff; font-size:0.75rem; padding:3px 8px; border-radius:10px; font-weight:700;">+15 PTS</span>
                     </div>
-                    <p id="poll-question" style="font-size: 0.9rem; margin-bottom: 12px; color: var(--text-main); line-height: 1.4;">Chargement du sondage...</p>
+                    <p id="poll-question" style="font-size: 0.9rem; margin-bottom: 12px; color: var(--text-main);"></p>
+                    <div id="poll-container" style="display:flex; flex-direction:column; gap:8px;"></div>
                 </div>
 
-                <!-- BOUTON SOS RÉCONCILIATION -->
+                <!-- PROTOCOLE SOS -->
                 <div class="card" style="background: linear-gradient(135deg, rgba(255, 23, 68, 0.25), rgba(157, 78, 221, 0.25)); border: 1.5px solid rgba(255,23,68,0.5);">
                     <h2>🚨 Protocole "Sauvons notre soirée"</h2>
-                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">Un clic déclenche un rendez-vous obligatoire ce soir sans écran ni bouderie.</p>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">Un clic déclenche un rendez-vous obligatoire ce soir sans écran.</p>
                     <button class="btn-primary" onclick="triggerSos()" style="background: linear-gradient(135deg, #ff1744, #db2777);">Déclencher le RDV Réconciliation ❤️</button>
                 </div>
             </div>
 
-            <!-- ONGLET 2 : JEUX & TROPHÉES -->
+            <!-- ONGLET 2 : JEUX, MISSIONS & TROPHÉES -->
             <div id="tab-play" class="tab-content hidden">
-                <!-- ROULETTE INFERNALE -->
                 <div class="card" style="text-align: center; border: 2px dashed var(--accent);">
                     <h2>🎰 Roulette Infernale</h2>
                     <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px;">1 tour par jour : gagne des points bonus !</p>
@@ -656,23 +659,41 @@
                         <div class="wheel-pointer"></div>
                         <div id="roulette-wheel" class="wheel-container"><div class="wheel-center">🔥</div></div>
                     </div>
-                    <button id="btn-spin" class="btn-primary" onclick="spinRoulette()">Tourner la roue 🎡</button>
+                    <button class="btn-primary" onclick="spinRoulette()">Tourner la roue 🎡</button>
                 </div>
 
-                <!-- PETITES ATTENTIONS EN AUTONOMIE -->
+                <!-- MISSIONS EN DUO -->
+                <div class="card">
+                    <h2>🎯 Missions Complicité en Duo</h2>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">Défis à réaliser ensemble :</p>
+                    <div class="item-row">
+                        <div class="item-info">
+                            <h4>💋 Compliment sincère impromptu</h4>
+                            <p>Glisser un mot doux ou un compliment inattendu</p>
+                            <span>+10 pts</span>
+                        </div>
+                        <button class="btn-action" onclick="completeDirectMission('Compliment sincère impromptu', 10)">Valider</button>
+                    </div>
+                    <div class="item-row" style="margin-top: 8px;">
+                        <div class="item-info">
+                            <h4>🤗 Câlin prolongé de 30 secondes</h4>
+                            <p>S'étreindre au calme sans rien dire</p>
+                            <span>+15 pts</span>
+                        </div>
+                        <button class="btn-action" onclick="completeDirectMission('Câlin prolongé 30s', 15)">Valider</button>
+                    </div>
+                </div>
+
+                <!-- ATTENTIONS EN AUTONOMIE -->
                 <div class="card">
                     <h2>❤️ Petites Attentions en Autonomie</h2>
                     <div class="item-row">
-                        <div class="item-info"><h4>☕ Boisson / Encas surprise</h4><p>Préparer son café/thé sans qu'il/elle demande</p><span>+5 pts</span></div>
+                        <div class="item-info"><h4>☕ Boisson / Encas surprise</h4><p>Préparer son café/thé sans demander</p><span>+5 pts</span></div>
                         <button class="btn-action" onclick="completeDirectMission('Boisson / Encas surprise', 5)">Valider</button>
                     </div>
                     <div class="item-row" style="margin-top: 8px;">
                         <div class="item-info"><h4>🧹 Soulager une corvée</h4><p>Prendre une tâche en charge à sa place</p><span>+10 pts</span></div>
                         <button class="btn-action" onclick="completeDirectMission('Soulager une corvée', 10)">Valider</button>
-                    </div>
-                    <div class="item-row" style="margin-top: 8px;">
-                        <div class="item-info"><h4>🧸 Mot doux ou surprise</h4><p>Laisser un petit mot ou une attention cachée</p><span>+5 pts</span></div>
-                        <button class="btn-action" onclick="completeDirectMission('Mot doux ou surprise', 5)">Valider</button>
                     </div>
                 </div>
 
@@ -710,26 +731,30 @@
                             <div class="trophy-info"><h4>Premier Plaisir</h4><p>S'offrir un article de la boutique</p></div>
                             <span class="trophy-badge" id="tr-shop">Verrouillé</span>
                         </div>
+                        <div class="trophy-row">
+                            <span class="trophy-icon">💬</span>
+                            <div class="trophy-info"><h4>Opinion Partagée</h4><p>Répondre au sondage de la semaine</p></div>
+                            <span class="trophy-badge" id="tr-poll">Verrouillé</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- ONGLET 3 : BOUTIQUE COMPLÈTE -->
+            <!-- ONGLET 3 : BOUTIQUE -->
             <div id="tab-shop" class="tab-content hidden">
                 <div class="card">
                     <h2>🎁 La Grande Boutique du Sanctuaire</h2>
-                    
                     <div class="shop-category-title">✨ Petites Attentions & Douceurs</div>
                     <div class="item-row">
-                        <div class="item-info"><h4>🍫 Carte Blanche Gourmandise</h4><p>L'autre ramène ou prépare ta douceur préférée</p><span>50 pts</span></div>
+                        <div class="item-info"><h4>🍫 Carte Blanche Gourmandise</h4><p>Ramener ta douceur préférée</p><span>50 pts</span></div>
                         <button class="btn-action" onclick="buyReward(50, 'Carte Blanche Gourmandise')">S'offrir</button>
                     </div>
                     <div class="item-row">
-                        <div class="item-info"><h4>📺 Contrôle Total de la TV</h4><p>Choix du film ou programme ce soir sans débat</p><span>100 pts</span></div>
+                        <div class="item-info"><h4>📺 Contrôle Total de la TV</h4><p>Choix du film ce soir</p><span>100 pts</span></div>
                         <button class="btn-action" onclick="buyReward(100, 'Contrôle Total de la TV')">S'offrir</button>
                     </div>
                     <div class="item-row">
-                        <div class="item-info"><h4>💤 Sieste Câline Ininterrompue</h4><p>45 min de calme absolu et câlins au lit</p><span>120 pts</span></div>
+                        <div class="item-info"><h4>💤 Sieste Câline Ininterrompue</h4><p>45 min de calme et câlins</p><span>120 pts</span></div>
                         <button class="btn-action" onclick="buyReward(120, 'Sieste Câline Ininterrompue')">S'offrir</button>
                     </div>
                     <div class="item-row">
@@ -739,11 +764,11 @@
 
                     <div class="shop-category-title">🧹 Services & Coup de Pouce</div>
                     <div class="item-row">
-                        <div class="item-info"><h4>💆 Massage Épaules / Pieds</h4><p>15 minutes de détente sur le canapé</p><span>200 pts</span></div>
+                        <div class="item-info"><h4>💆 Massage Épaules / Pieds</h4><p>15 minutes de détente</p><span>200 pts</span></div>
                         <button class="btn-action" onclick="buyReward(200, 'Massage Épaules / Pieds')">S'offrir</button>
                     </div>
                     <div class="item-row">
-                        <div class="item-info"><h4>🍹 Barman à Domicile</h4><p>Service du cocktail/verre préféré au lit/salon</p><span>200 pts</span></div>
+                        <div class="item-info"><h4>🍹 Barman à Domicile</h4><p>Boisson servie au lit/salon</p><span>200 pts</span></div>
                         <button class="btn-action" onclick="buyReward(200, 'Barman à Domicile')">S'offrir</button>
                     </div>
                     <div class="item-row">
@@ -751,60 +776,42 @@
                         <button class="btn-action" onclick="buyReward(250, 'Nettoyage de la Voiture')">S'offrir</button>
                     </div>
                     <div class="item-row">
-                        <div class="item-info"><h4>🧹 Joker "Zéro Corvée"</h4><p>L'autre gère toutes les tâches de la soirée</p><span>300 pts</span></div>
+                        <div class="item-info"><h4>🧹 Joker "Zéro Corvée"</h4><p>Gestion de toutes les tâches de la soirée</p><span>300 pts</span></div>
                         <button class="btn-action" onclick="buyReward(300, 'Joker Zéro Corvée')">S'offrir</button>
                     </div>
 
-                    <div class="shop-category-title">🍷 Moments Amoureux & Évasions</div>
+                    <div class="shop-category-title">🍷 Moments Amoureux</div>
                     <div class="item-row">
-                        <div class="item-info"><h4>🍷 Dîner Tête-à-Tête</h4><p>Resto ou repas maison aux chandelles</p><span>1500 pts</span></div>
+                        <div class="item-info"><h4>🍷 Dîner Tête-à-Tête</h4><p>Resto ou repas aux chandelles</p><span>1500 pts</span></div>
                         <button class="btn-action" onclick="buyReward(1500, 'Dîner Tête-à-Tête')">S'offrir</button>
                     </div>
                     <div class="item-row">
-                        <div class="item-info"><h4>🎬 Rendez-vous Ciné & Repas</h4><p>Sortie en amoureux sans parler du quotidien</p><span>1800 pts</span></div>
+                        <div class="item-info"><h4>🎬 Rendez-vous Ciné & Repas</h4><p>Sortie en amoureux</p><span>1800 pts</span></div>
                         <button class="btn-action" onclick="buyReward(1800, 'Rendez-vous Ciné & Repas')">S'offrir</button>
                     </div>
                     <div class="item-row">
-                        <div class="item-info"><h4>🏨 Nuit Hors de la Maison</h4><p>Coupure totale en amoureux (hôtel/gîte)</p><span>3500 pts</span></div>
+                        <div class="item-info"><h4>🏨 Nuit Hors de la Maison</h4><p>Coupure totale en amoureux</p><span>3500 pts</span></div>
                         <button class="btn-action" onclick="buyReward(3500, 'Nuit Hors de la Maison')">S'offrir</button>
                     </div>
                 </div>
 
-                <!-- ZONE ROUGE ET PASSION -->
+                <!-- ZONE ROUGE -->
                 <div class="card card-redzone">
                     <h2 style="color: #ff1744; text-shadow: 0 0 15px rgba(255,23,68,0.8);">🔥 Zone Rouge • Grandes Envies</h2>
-                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">Des jokers passionnés à sortir les jours de grande envie :</p>
-                    
                     <div class="item-row">
-                        <div class="item-info">
-                            <h4>💋 Rapide & Brûlant</h4>
-                            <p>Moment passionné et spontané dans la journée</p>
-                            <span style="color: #ff1744;">350 pts</span>
-                        </div>
+                        <div class="item-info"><h4>💋 Rapide & Brûlant</h4><p>Moment passionné et spontané</p><span style="color: #ff1744;">350 pts</span></div>
                         <button class="btn-action" style="background: rgba(255,23,68,0.3); border-color: #ff1744; color: #fff;" onclick="buyReward(350, 'Rapide & Brûlant')">S'offrir 🔥</button>
                     </div>
                     <div class="item-row" style="margin-top: 8px;">
-                        <div class="item-info">
-                            <h4>🔞 Massage Érotique & Huiles</h4>
-                            <p>Massage intégral aux huiles axé sur la sensualité</p>
-                            <span style="color: #ff1744;">600 pts</span>
-                        </div>
+                        <div class="item-info"><h4>🔞 Massage Érotique & Huiles</h4><p>Massage intégral sensuel</p><span style="color: #ff1744;">600 pts</span></div>
                         <button class="btn-action" style="background: rgba(255,23,68,0.3); border-color: #ff1744; color: #fff;" onclick="buyReward(600, 'Massage Érotique & Huiles')">S'offrir 🔥</button>
                     </div>
                     <div class="item-row" style="margin-top: 8px;">
-                        <div class="item-info">
-                            <h4>🎭 Fantasme / Scénario Secret</h4>
-                            <p>Tester une idée, un jeu de rôle ou une envie choisie</p>
-                            <span style="color: #ff1744;">900 pts</span>
-                        </div>
+                        <div class="item-info"><h4>🎭 Fantasme / Scénario Secret</h4><p>Tester une idée ou un jeu de rôle</p><span style="color: #ff1744;">900 pts</span></div>
                         <button class="btn-action" style="background: rgba(255,23,68,0.3); border-color: #ff1744; color: #fff;" onclick="buyReward(900, 'Fantasme / Scénario Secret')">S'offrir 🔥</button>
                     </div>
                     <div class="item-row" style="margin-top: 8px;">
-                        <div class="item-info">
-                            <h4>🗝️ Clés de la Chambre (Désir Total)</h4>
-                            <p>Prise en charge totale : l'autre pilote la soirée à 100%</p>
-                            <span style="color: #ff1744;">1500 pts</span>
-                        </div>
+                        <div class="item-info"><h4>🗝️ Clés de la Chambre (Désir Total)</h4><p>L'autre pilote la soirée à 100%</p><span style="color: #ff1744;">1500 pts</span></div>
                         <button class="btn-action" style="background: rgba(255,23,68,0.3); border-color: #ff1744; color: #fff;" onclick="buyReward(1500, 'Clés de la Chambre')">S'offrir 🔥</button>
                     </div>
                 </div>
@@ -814,61 +821,39 @@
             <div id="tab-gift" class="tab-content hidden">
                 <div class="card">
                     <h2>✨ Offrir des points à l'autre</h2>
-                    <div class="form-group">
-                        <label>Montant en Lovemoney :</label>
-                        <input type="number" id="gift-amount" value="15" min="1">
-                    </div>
-                    <div class="form-group">
-                        <label>Mot doux associé :</label>
-                        <input type="text" id="gift-reason" placeholder="Ex: Pour ton sourire aujourd'hui...">
-                    </div>
+                    <div class="form-group"><label>Montant :</label><input type="number" id="gift-amount" value="15" min="1"></div>
+                    <div class="form-group"><label>Mot doux :</label><input type="text" id="gift-reason" placeholder="Ex: Pour ton sourire..."></div>
                     <button class="btn-primary" onclick="sendMysteryGift()">Envoyer l'enveloppe 💌</button>
                 </div>
 
                 <div class="card">
                     <h2>📜 Journal des efforts</h2>
-                    <div class="history-list" id="history-box">
-                        <div class="history-item">Aucune action récente enregistrée.</div>
-                    </div>
+                    <div class="history-list" id="history-box"><div class="history-item">Aucune action récente.</div></div>
                 </div>
             </div>
 
-            <!-- NAVIGATION FIXE EN BAS -->
+            <!-- NAVIGATION INFÉRIEURE -->
             <nav class="bottom-nav">
-                <button class="nav-item active" onclick="switchTab('home', this)">
-                    <span style="font-size: 1.3rem;">🏠</span>
-                    <span>Accueil</span>
-                </button>
-                <button class="nav-item" onclick="switchTab('play', this)">
-                    <span style="font-size: 1.3rem;">🎰</span>
-                    <span>Jeux</span>
-                </button>
-                <button class="nav-item" onclick="switchTab('shop', this)">
-                    <span style="font-size: 1.3rem;">🎁</span>
-                    <span>Boutique</span>
-                </button>
-                <button class="nav-item" onclick="switchTab('gift', this)">
-                    <span style="font-size: 1.3rem;">💌</span>
-                    <span>Offrir</span>
-                </button>
+                <button class="nav-item active" onclick="switchTab('home', this)"><span style="font-size: 1.3rem;">🏠</span><span>Accueil</span></button>
+                <button class="nav-item" onclick="switchTab('play', this)"><span style="font-size: 1.3rem;">🎰</span><span>Jeux</span></button>
+                <button class="nav-item" onclick="switchTab('shop', this)"><span style="font-size: 1.3rem;">🎁</span><span>Boutique</span></button>
+                <button class="nav-item" onclick="switchTab('gift', this)"><span style="font-size: 1.3rem;">💌</span><span>Offrir</span></button>
             </nav>
         </div>
     </div>
 
-    <!-- SCRIPT JAVASCRIPT ET TEMPS RÉEL PUSHER -->
+    <!-- SCRIPT COMPLET ET LOGIQUE TEMPS RÉEL PUSHER -->
     <script>
-        // IDENTIFIANTS PUSHER CHANNELS
         const PUSHER_KEY = "a22d7f2dcbd1a070113b";
         const PUSHER_CLUSTER = "eu";
 
         const pusher = new Pusher(PUSHER_KEY, { cluster: PUSHER_CLUSTER });
         const channel = pusher.subscribe('lovemoney-sanctuary');
 
-        // STRUCTURE DE STOCKAGE DE L'APPLICATION
         let state = JSON.parse(localStorage.getItem('lovemoney_master_state')) || {
             users: {
-                maeva: { balance: 100, pin: "1234", status: "" },
-                greg: { balance: 100, pin: "1234", status: "" }
+                maeva: { balance: 100, pin: "1234", status: "", pollAnswered: false },
+                greg: { balance: 100, pin: "1234", status: "", pollAnswered: false }
             },
             gifts: [],
             history: []
@@ -880,7 +865,6 @@
 
         let currentUser = null;
 
-        // GESTION PROFIL ET PIN
         function selectProfile(user) {
             currentUser = user;
             document.getElementById('screen-login').classList.add('hidden');
@@ -900,8 +884,9 @@
                 document.getElementById('lbl-username').innerText = currentUser === 'maeva' ? 'Maëva' : 'Grégory';
                 document.body.className = currentUser === 'maeva' ? 'theme-maeva' : 'theme-greg';
                 updateUI();
+                initPoll();
             } else {
-                alert("Code PIN incorrect ! (Code par défaut: 1234)");
+                alert("Code PIN incorrect ! (Défaut: 1234)");
             }
         }
 
@@ -910,7 +895,7 @@
             if (newPin && newPin.length >= 4) {
                 state.users[currentUser].pin = newPin;
                 saveState();
-                alert("Code PIN mis à jour avec succès !");
+                alert("Code PIN mis à jour !");
             }
         }
 
@@ -932,10 +917,8 @@
             btn.classList.add('active');
         }
 
-        // RAFFRAÎCHISSEMENT DE L'INTERFACE
         function updateUI() {
             if (!currentUser) return;
-
             document.getElementById('lbl-balance').innerText = state.users[currentUser].balance;
 
             const partner = currentUser === 'maeva' ? 'greg' : 'maeva';
@@ -949,11 +932,9 @@
                 pLabel.innerText = `${partnerName} n'a pas encore indiqué son état.`;
             }
 
-            // Affichage des enveloppes reçues non réclamées
             const myGifts = state.gifts.filter(g => g.to === currentUser && !g.claimed);
             const giftSec = document.getElementById('gift-section');
             const giftList = document.getElementById('gift-list');
-            
             if (myGifts.length > 0) {
                 giftSec.classList.remove('hidden');
                 giftList.innerHTML = myGifts.map((g, idx) => `
@@ -966,7 +947,7 @@
                 giftSec.classList.add('hidden');
             }
 
-            // Déblocage visuel des trophées
+            // Déblocage des trophées
             if (state.users[currentUser].balance >= 500) {
                 const tr = document.getElementById('tr-500');
                 if (tr) { tr.innerText = "Débloqué"; tr.classList.add('unlocked'); }
@@ -979,29 +960,61 @@
                 const tr = document.getElementById('tr-status');
                 if (tr) { tr.innerText = "Débloqué"; tr.classList.add('unlocked'); }
             }
+            if (state.users[currentUser].pollAnswered) {
+                const tr = document.getElementById('tr-poll');
+                if (tr) { tr.innerText = "Débloqué"; tr.classList.add('unlocked'); }
+            }
 
-            // Historique des actions
             const hBox = document.getElementById('history-box');
             if (state.history.length > 0) {
                 hBox.innerHTML = state.history.slice(-10).reverse().map(h => `<div class="history-item">${h}</div>`).join('');
             }
         }
 
-        // ACTIONS UTILISATEUR
+        // INITIALISATION SONDAGE
+        const pollData = {
+            question: "Quelle est notre prochaine escapade idéale ce mois-ci ?",
+            options: [
+                "🌴 Un week-end détente en gîte / hôtel",
+                "🍽️ Un grand restaurant gastronomique",
+                "🎬 Une soirée cocooning cinéma & snacks à la maison"
+            ]
+        };
+
+        function initPoll() {
+            document.getElementById('poll-question').innerText = pollData.question;
+            const container = document.getElementById('poll-container');
+            
+            if (state.users[currentUser].pollAnswered) {
+                container.innerHTML = `<p style="color: var(--accent); font-weight: 600; margin: 0;">✅ Merci pour ton vote ! +15 Lovemoney crédités.</p>`;
+            } else {
+                container.innerHTML = pollData.options.map((opt, idx) => `
+                    <button class="poll-option-btn" onclick="answerPoll(${idx})">${opt}</button>
+                `).join('');
+            }
+        }
+
+        function answerPoll(idx) {
+            if (state.users[currentUser].pollAnswered) return;
+            state.users[currentUser].pollAnswered = true;
+            state.users[currentUser].balance += 15;
+            state.history.push(`${currentUser === 'maeva' ? 'Maëva' : 'Grégory'} a répondu au sondage de la semaine (+15 pts)`);
+            saveState();
+            updateUI();
+            initPoll();
+            alert("Merci ! +15 Lovemoney ajoutés à ton capital ❤️");
+        }
+
         function setStatus(stKey) {
             const labels = {
-                'forme': '⚡ En forme',
-                'fatigue': '🔋 Fatigué(e)',
-                'epuise': '💤 Épuisé(e)',
-                'triste': '🌧️ Triste / Bof',
-                'coquin': '🔥 Coquin(e)',
-                'solitude': '🧘 Bes. de solitude',
+                'forme': '⚡ En forme', 'fatigue': '🔋 Fatigué(e)', 'epuise': '💤 Épuisé(e)',
+                'triste': '🌧️ Triste / Bof', 'coquin': '🔥 Coquin(e)', 'solitude': '🧘 Bes. de solitude',
                 'amour': '❤️ Besoin d\'amour & douceur'
             };
             state.users[currentUser].status = labels[stKey] || stKey;
             saveState();
             updateUI();
-            alert("Ton état d'esprit a été mis à jour et partagé !");
+            alert("État d'esprit partagé avec succès !");
         }
 
         function completeDirectMission(title, pts) {
@@ -1016,7 +1029,6 @@
             const wheel = document.getElementById('roulette-wheel');
             const bonus = Math.floor(Math.random() * 40) + 10;
             wheel.style.transform = `rotate(${Math.floor(Math.random() * 1000) + 720}deg)`;
-            
             setTimeout(() => {
                 state.users[currentUser].balance += bonus;
                 state.history.push(`${currentUser === 'maeva' ? 'Maëva' : 'Grégory'} a tourné la roue (+${bonus} pts)`);
@@ -1038,7 +1050,7 @@
                 updateUI();
                 alert(`Félicitations ! Tu t'es offert : "${name}" ❤️`);
             } else {
-                alert("Solde de Lovemoney insuffisant pour cet achat !");
+                alert("Solde de Lovemoney insuffisant !");
             }
         }
 
@@ -1075,7 +1087,6 @@
             alert("🚨 Protocole Réconciliation activé ! Ce soir, zéro écran et zéro dispute ❤️");
         }
 
-        // CALCULATEUR DU NOMBRE DE JOURS ENSEMBLE (DEPUIS LE 26 MARS 2015)
         function updateCounter() {
             const start = new Date("2015-03-26");
             const now = new Date();
@@ -1084,14 +1095,6 @@
             if (el) el.innerText = `${diffDays} jours d'amour`;
         }
         updateCounter();
-
-        // QUESTION DE SONDAGE PAR DÉFAUT
-        const polls = [
-            "Quelle est notre prochaine destination de rêve ?",
-            "Quel est le petit plat maison que tu préfères ?",
-            "Quel est ton meilleur souvenir de cette année à nos côtés ?"
-        ];
-        document.getElementById('poll-question').innerText = polls[Math.floor(Math.random() * polls.length)];
     </script>
 </body>
 </html>
