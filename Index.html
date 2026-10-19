@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lovemoney • Sanctuaire Ultime</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #2b031c 0%, #4a0d2d 40%, #1f0414 100%);
+            --card-bg: rgba(55, 15, 38, 0.65);
+            --border-color: rgba(255, 107, 139, 0.4);
+            --text-main: #fff1f2;
+            --text-muted: #fecdd3;
+            --shadow: 0 20px 50px rgba(0, 0, 0, 0.85);
+            --border-radius: 26px;
+        }
+
+        body.theme-maeva {
+            --primary: #ff1744;
+            --primary-light: rgba(255, 23, 68, 0.3);
+            --accent: #ff8a80;
+            --glow: rgba(255, 23, 68, 0.7);
+        }
+
+        body.theme-greg {
+            --primary: #9d4edd;
+            --primary-light: rgba(157, 78, 221, 0.3);
+            --accent: #e0aaff;
+            --glow: rgba(157, 78, 221, 0.7);
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            margin: 0;
+            padding: 16px;
+            padding-bottom: 100px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .bg-decorations {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .floating-heart-bg {
+            position: absolute;
+            color: rgba(255, 107, 139, 0.25);
+            font-size: 2.5rem;
+            animation: floatBackground 10s infinite linear;
+            filter: drop-shadow(0 0 10px rgba(255, 23, 68, 0.4));
+        }
+
+        @keyframes floatBackground {
+            0% { transform: translateY(105vh) rotate(0deg) scale(0.7); opacity: 0; }
+            20% { opacity: 0.8; }
+            80% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) rotate(360deg) scale(1.3); opacity: 0; }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            animation: fadeIn 0.4s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        header { text-align: center; margin-bottom: 24px; }
+        header h1 { 
+            color: var(--primary); 
+            font-size: 2.6rem; 
+            font-weight: 700; 
+            margin: 0 0 6px 0; 
+            text-shadow: 0 0 35px var(--glow), 0 0 10px rgba(255,255,255,0.4); 
+            letter-spacing: -0.5px;
+        }
+
+        .romance-banner {
+            background: linear-gradient(135deg, rgba(255, 23, 68, 0.2), rgba(157, 78, 221, 0.2));
+            border: 1px solid var(--border-color);
+            border-radius: 22px;
+            padding: 14px 18px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 0 15px rgba(255,23,68,0.2);
+            margin-bottom: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .romance-banner .counter-text {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 4px;
+        }
+
+        .romance-banner .quote-text {
+            font-size: 0.82rem;
+            font-style: italic;
+            color: var(--text-muted);
+        }
+
+        .heart-beat {
+            display: inline-block;
+            animation: pulseHeart 1.5s infinite ease-in-out;
+        }
+
+        @keyframes pulseHeart {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.25); }
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(25px);
+            border: 1.5px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 24px;
+            box-shadow: var(--shadow), 0 0 20px rgba(255, 75, 110, 0.1);
+            margin-bottom: 16px;
+        }
+
+        .card-redzone {
+            background: linear-gradient(135deg, rgba(70, 5, 30, 0.85), rgba(30, 2, 15, 0.9));
+            border: 1.5px solid #ff1744;
+            box-shadow: 0 0 25px rgba(255, 23, 68, 0.4);
+        }
+
+        .profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 15px; }
+        .profile-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        }
+        .profile-card:hover { border-color: var(--primary); background: var(--primary-light); transform: translateY(-4px); box-shadow: 0 12px 30px var(--glow); }
+
+        .top-bar {
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255, 255, 255, 0.06); border: 1px solid var(--border-color);
+            padding: 12px 18px; border-radius: 18px; margin-bottom: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        .balance-box {
+            background: radial-gradient(circle at center, rgba(255,23,68,0.25) 0%, rgba(45,15,38,0.8) 100%);
+            border: 1.5px solid var(--border-color); border-radius: var(--border-radius);
+            padding: 26px; text-align: center; margin-bottom: 16px;
+            box-shadow: inset 0 0 30px rgba(255,23,68,0.3), 0 15px 35px rgba(0,0,0,0.5);
+        }
+
+        .balance-box .score { font-size: 3.6rem; font-weight: 700; color: var(--primary); text-shadow: 0 0 30px var(--glow); }
+
+        h2 { font-size: 1.15rem; color: var(--text-main); margin-top: 0; margin-bottom: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+
+        .form-group { margin-bottom: 14px; }
+        label { display: block; font-size: 0.85rem; margin-bottom: 6px; color: var(--text-muted); }
+        input {
+            width: 100%; padding: 14px; border: 1.5px solid var(--border-color);
+            background: rgba(0, 0, 0, 0.5); border-radius: 16px; font-size: 1rem;
+            color: var(--text-main); box-sizing: border-box;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white; border: none; padding: 14px; border-radius: 16px;
+            width: 100%; font-weight: 600; font-size: 1rem; cursor: pointer;
+            box-shadow: 0 10px 30px var(--glow); transition: all 0.3s;
+        }
+
+        .btn-action {
+            background: var(--primary-light); color: var(--accent);
+            border: 1.5px solid var(--border-color); padding: 8px 14px;
+            border-radius: 14px; font-weight: 600; font-size: 0.85rem; cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .btn-action:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        .status-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 12px; }
+        .status-btn {
+            background: rgba(255, 255, 255, 0.05); border: 1.5px solid var(--border-color);
+            border-radius: 14px; padding: 10px 8px; text-align: center; cursor: pointer;
+            font-size: 0.8rem; color: var(--text-muted); transition: all 0.3s;
+        }
+        .status-btn.active { border-color: var(--primary); background: var(--primary-light); color: var(--text-main); font-weight: bold; box-shadow: 0 0 20px var(--glow); }
+
+        .item-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .item-row:last-child { border-bottom: none; }
+        .item-info h4 { margin: 0 0 2px 0; font-size: 0.95rem; }
+        .item-info p { margin: 0; font-size: 0.75rem; color: var(--text-muted); }
+
+        .shop-category-title {
+            font-size: 0.78rem; font-weight: 700; color: var(--accent); margin: 18px 0 8px 0;
+            text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid var(--border-color);
+            padding-bottom: 4px;
+        }
+
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: rgba(30, 8, 20, 0.95); backdrop-filter: blur(25px);
+            border-top: 1.5px solid var(--border-color); display: flex;
+            justify-content: space-around; padding: 12px 0; z-index: 1000;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.8);
+        }
+
+        .nav-item {
+            background: none; border: none; color: var(--text-muted);
+            font-size: 0.75rem; display: flex; flex-direction: column;
+            align-items: center; gap: 4px; cursor: pointer; flex: 1;
+        }
+        .nav-item.active { color: var(--primary); font-weight: 600; text-shadow: 0 0 10px var(--glow); }
+
+        .gift-box, .pending-box {
+            background: rgba(255, 183, 3, 0.12); border: 2px dashed rgba(255, 183, 3, 0.6);
+            border-radius: var(--border-radius); padding: 16px; margin-bottom: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+
+        .wheel-container {
+            position: relative; width: 150px; height: 150px; margin: 0 auto 16px auto;
+            border-radius: 50%; border: 6px solid var(--primary);
+            background: conic-gradient(#ff1744 0deg 72deg, #ffb703 72deg 144deg, #7c3aed 144deg 216deg, #db2777 216deg 288deg, #ea580c 288deg 360deg);
+            display: flex; align-items: center; justify-content: center; transition: transform 4.5s ease;
+            box-shadow: 0 0 25px var(--glow);
+        }
+        .wheel-center { width: 40px; height: 40px; background: #0f050c; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .wheel-pointer { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 14px solid #fff; z-index: 10; }
+
+        .trophy-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .trophy-icon { font-size: 1.8rem; filter: drop-shadow(0 0 10px var(--glow)); }
+        .trophy-info { flex: 1; }
+        .trophy-info h4 { margin: 0; font-size: 0.9rem; }
+        .trophy-info p { margin: 2px 0 0 0; font-size: 0.75rem; color: var(--text-muted); }
+        .trophy-badge { font-size: 0.75rem; font-weight: bold; padding: 4px 8px; border-radius: 10px; background: rgba(255,255,255,0.06); border: 1.5px solid var(--border-color); }
+        .trophy-badge.unlocked { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: 0 0 15px var(--glow); }
+
+        .heart-particle {
+            position: fixed; top: -20px; font-size: 1.6rem;
+            pointer-events: none; z-index: 3000;
+            animation: fall 2.5s linear forwards;
+            filter: drop-shadow(0 0 8px #ff1744);
+        }
+        @keyframes fall {
+            to { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+        }
+
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 2, 10, 0.92); backdrop-filter: blur(25px);
+            display: flex; justify-content: center; align-items: center; z-index: 2000;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s;
+        }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .modal-card {
+            background: #2e0d22; border: 2px solid var(--border-color);
+            border-radius: var(--border-radius); padding: 26px; width: 85%; max-width: 380px; text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9), 0 0 30px var(--glow);
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body class="theme-maeva">
+
+    <!-- ARRIÈRE-PLAN ANIMÉ DE CŒURS ROMANTIQUES -->
+    <div class="bg-decorations">
+        <div class="floating-heart-bg" style="left: 8%; animation-duration: 12s; animation-delay: 0s;">❤️</div>
+        <div class="floating-heart-bg" style="left: 28%; animation-duration: 16s; animation-delay: 3s;">💖</div>
+        <div class="floating-heart-bg" style="left: 52%; animation-duration: 11s; animation-delay: 1s;">✨</div>
+        <div class="floating-heart-bg" style="left: 74%; animation-duration: 14s; animation-delay: 4s;">💋</div>
+        <div class="floating-heart-bg" style="left: 88%; animation-duration: 13s; animation-delay: 2s;">🔥</div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>🔥 Lovemoney</h1>
+            
+            <div class="romance-banner">
+                <div class="counter-text">
+                    <span class="heart-beat">❤️</span> <span id="couple-counter">Calcul en cours...</span> <span class="heart-beat">❤️</span>
+                </div>
+                <div class="quote-text" id="daily-quote">"Chaque jour est une nouvelle occasion de se redécouvrir." ✨</div>
+            </div>
+        </header>
+
+        <!-- LOGIN -->
+        <div id="screen-login" class="card" style="text-align: center; padding: 40px 20px;">
+            <h2>Qui reprend le contrôle ?</h2>
+            <div class="profile-grid">
+                <div class="profile-card" onclick="selectProfile('maeva')">
+                    <span style="font-size: 3.2rem;">👩‍🦰</span>
+                    <h3 style="margin: 12px 0 0 0;">Maëva</h3>
+                </div>
+                <div class="profile-card" onclick="selectProfile('greg')">
+                    <span style="font-size: 3.2rem;">👨‍💻</span>
+                    <h3 style="margin: 12px 0 0 0;">Grégory</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- PIN -->
+        <div id="screen-pin" class="card hidden" style="text-align: center;">
+            <h2 id="pin-title">Code PIN</h2>
+            <p id="pin-subtitle" style="font-size: 0.85rem; color: var(--text-muted);"></p>
+            <div class="form-group">
+                <input type="password" id="pin-input" placeholder="••••" maxlength="6" style="text-align: center; font-size: 1.6rem; letter-spacing: 8px;">
+            </div>
+            <button class="btn-primary" onclick="submitPin()">Entrer dans le sanctuaire 🔓</button>
+            <button class="btn-action" style="margin-top: 12px; width: 100%; background: transparent; border: none; color: var(--text-muted);" onclick="backToLogin()">← Retour</button>
+        </div>
+
+        <!-- APPLICATION PRINCIPALE -->
+        <div id="screen-app" class="hidden">
+            
+            <div class="top-bar">
+                <span>Sanctuaire de <strong id="lbl-username"></strong></span>
+                <div style="display:flex; gap:8px;">
+                    <button class="btn-action" onclick="openPinChange()">PIN ⚙️</button>
+                    <button class="btn-action" onclick="logout()">🔒</button>
+                </div>
+            </div>
+
+            <!-- ONGLET 1 : ACCUEIL -->
+            <div id="tab-home" class="tab-content">
+                <div class="balance-box">
+                    <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 600; letter-spacing: 1px;">Mon Capital Amour</span>
+                    <div class="score" id="lbl-balance">0</div>
+                    <small style="color: var(--accent); font-size: 0.85rem; font-weight: 500;">Lovemoney disponibles ✨</small>
+                </div>
+
+                <!-- ÉTAT D'ESPRIT DU MOMENT -->
+                <div class="card">
+                    <h2>🌡️ Mon état d'esprit du moment</h2>
+                    <div class="status-grid">
+                        <div class="status-btn" id="st-forme" onclick="setStatus('forme')">⚡ En forme</div>
+                        <div class="status-btn" id="st-fatigue" onclick="setStatus('fatigue')">🔋 Fatigué(e)</div>
+                        <div class="status-btn" id="st-epuise" onclick="setStatus('epuise')">💤 Épuisé(e)</div>
+                        <div class="status-btn" id="st-triste" onclick="setStatus('triste')">🌧️ Triste / "Bof"</div>
+                        <div class="status-btn" id="st-coquin" onclick="setStatus('coquin')">🔥 Coquin(e)</div>
+                        <div class="status-btn" id="st-solitude" onclick="setStatus('solitude')">🧘 Bes. de solitude</div>
+                        <div class="status-btn" id="st-amour" onclick="setStatus('amour')" style="grid-column: span 2;">❤️ Besoin d'amour & douceur</div>
+                    </div>
+                    <p id="partner-status-lbl" style="font-size:0.8rem; color:var(--accent); margin-top:10px; text-align:center;">L'autre n'a pas encore indiqué son état.</p>
+                </div>
+
+                <div id="gift-section" class="gift-box hidden">
+                    <h3 style="margin-top:0; font-size:0.95rem; color:#ffb703;">🎁 Une enveloppe secrète t'attend !</h3>
+                    <div id="gift-list"></div>
+                </div>
+
+                <div id="pending-section" class="card pending-box hidden">
+                    <h3 style="margin-top:0; font-size:0.95rem; color:#ffb703;">🔔 Actions de l'autre à valider :</h3>
+                    <div id="pending-list"></div>
+                </div>
+
+                <!-- SONDAGE HEBDOMADAIRE -->
+                <div class="card" style="background: rgba(255, 138, 128, 0.1); border: 1.5px solid rgba(255, 138, 128, 0.4);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                        <h2 style="margin:0;">💬 Sondage de la Semaine</h2>
+                        <span style="background:var(--primary); color:#fff; font-size:0.75rem; padding:3px 8px; border-radius:10px; font-weight:700;">+15 PTS</span>
+                    </div>
+                    <p id="poll-question" style="font-size: 0.9rem; margin-bottom: 12px; color: var(--text-main); line-height: 1.4;">Chargement...</p>
+                    <div id="poll-options" style="display: flex; flex-direction: column; gap: 8px;"></div>
+                </div>
+
+                <!-- SOS TENSION -->
+                <div class="card" style="background: linear-gradient(135deg, rgba(255, 23, 68, 0.25), rgba(157, 78, 221, 0.25)); border: 1.5px solid rgba(255,23,68,0.5);">
+                    <h2>🚨 Protocole "Sauvons notre soirée"</h2>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">Un clic déclenche un rendez-vous obligatoire ce soir sans écran ni bouderie.</p>
+                    <button class="btn-primary" onclick="triggerSos()" style="background: linear-gradient(135deg, #ff1744, #db2777);">Déclencher le RDV Réconciliation ❤️</button>
+                </div>
+            </div>
+
+            <!-- ONGLET 2 : JEUX & TROPHÉES -->
+            <div id="tab-play" class="tab-content hidden">
+                <!-- ROULETTE INFERNALE -->
+                <div class="card" style="text-align: center; border: 2px dashed var(--accent);">
+                    <h2>🎰 Roulette Infernale</h2>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px;">1 tour par jour : gagne des points OU un gage complice !</p>
+                    <div style="position: relative;">
+                        <div class="wheel-pointer"></div>
+                        <div id="roulette-wheel" class="wheel-container"><div class="wheel-center">🔥</div></div>
+                    </div>
+                    <button id="btn-spin" class="btn-primary" onclick="spinRoulette()">Tourner la roue 🎡</button>
+                    <small id="spin-warning" class="hidden" style="color: var(--accent); display: block; margin-top: 8px; font-weight: 600;">Déjà tourné aujourd'hui ! 😉</small>
+                </div>
+
+                <!-- ATTENTIONS INDIVIDUELLES POUR GÂTER L'AUTRE -->
+                <div class="card">
+                    <h2>❤️ Petites Attentions en Autonomie</h2>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 14px;">Choses faites de ton côté pour lui faire plaisir (1x par jour max) :</p>
+                    
+                    <div class="item-row">
+                        <div class="item-info">
+                            <h4>☕ Boisson / Encas surprise</h4>
+                            <p>Préparer son café/thé sans qu'il/elle demande</p>
+                            <span>+5 pts</span>
+                        </div>
+                        <button id="btn-m-drink" class="btn-action" onclick="completeDirectMission('drink', 'Boisson/Encas surprise', 5)">Valider</button>
+                    </div>
+
+                    <div class="item-row" style="margin-top: 8px;">
+                        <div class="item-info">
+                            <h4>🧹 Soulager une corvée</h4>
+                            <p>Prendre une tâche en charge à sa place</p>
+                            <span>+10 pts</span>
+                        </div>
+                        <button id="btn-m-chore" class="btn-action" onclick="completeDirectMission('chore', 'Soulager une corvée', 10)">Valider</button>
+                    </div>
+
+                    <div class="item-row" style="margin-top: 8px;">
+                        <div class="item-info">
+                            <h4>🧸 Mot doux ou attention cachée</h4>
+                            <p>Laisser un mot ou une petite surprise</p>
+                            <span>+5 pts</span>
+                        </div>
+                        <button id="btn-m-note" class="btn-action" onclick="completeDirectMission('note', 'Mot doux ou surprise', 5)">Valider</button>
+                    </div>
+                </div>
+
+                <!-- MISSIONS DU JOUR -->
+                <div class="card">
+                    <h2>🎯 Missions Complicité & Séduction</h2>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 14px;">Missions de couple tirées au sort chaque jour :</p>
+                    <div id="daily-missions-container"></div>
+                </div>
+
+                <!-- MES TROPHÉES & SUCCÈS -->
+                <div class="card">
+                    <h2>🏆 Trophées & Succès du Sanctuaire</h2>
+                    <div id="trophies-list"></div>
+                </div>
+
+                <!-- DÉCLARER UN EFFORT LIBRE -->
+                <div class="card">
+                    <h2>🤝 Déclarer un effort libre</h2>
+                    <div class="form-group">
+                        <input type="text" id="custom-mission-text" placeholder="Ex: J'ai géré un truc important..." style="margin-bottom: 8px;">
+                    </div>
+                    <button class="btn-action" style="width: 100%; text-align: center; padding: 12px;" onclick="submitCustomMission()">Envoyer à l'autre pour validation ✨</button>
+                </div>
+            </div>
+
+            <!-- ONGLET 3 : BOUTIQUE -->
+            <div id="tab-shop" class="tab-content hidden">
+                <div class="card">
+                    <h2>🎁 La Grande Boutique du Sanctuaire</h2>
+                    
+                    <!-- CATEGORIE 1 -->
+                    <div class="shop-category-title">✨ Petites Attentions & Douceurs</div>
+                    <div class="item-row">
+                        <div class="item-info"><h4>🍫 Carte Blanche Gourmandise</h4><p>L'autre ramène ou prépare ta douceur préférée</p><span>50</span></div>
+                        <button class="btn-action" onclick="buyReward(50, 'Carte Blanche Gourmandise')">S'offrir</button>
+                    </div>
+                    <div class="item-row">
+                        <div class="item-info"><h4>📺 Contrôle Total de la TV</h4><p>Choix du film/programme ce soir sans débat</p><span>100</span></div>
+                        <button class="btn-action" onclick="buyReward(100, 'Contrôle Total de la TV')">S'offrir</button>
+                    </div>
+                    <div class="item-row">
+                        <div class="item-info"><h4>💤 Sieste Câline Ininterrompue</h4><p>45 min de calme absolu et câlins au lit</p><span>120</span></div>
+                        <button class="btn-action" onclick="buyReward(120, 'Sieste Câline Ininterrompue')">S'offrir</button>
+                    </div>
+                    <div class="item-row">
+                        <div class="item-info"><h4>☕ Petit-déj au lit royal</h4><p>Préparé et servi avec le sourire</p><span>150</span></div>
+                        <button class="btn-action" onclick="buyReward(150, 'Petit-déj au lit royal')">S'offrir</button>
+                    </div>
+
+                    <!-- CATEGORIE 2 -->
+                    <div class="shop-category-title">🧹 Services & Coup de Pouce</div>
+                    <div class="item-row">
+                        <div class="item-info"><h4>💆 Massage Épaules / Pieds</h4><p>15 minutes de détente sur le canapé</p><span>200</span></div>
+                        <button class="btn-action" onclick="buyReward(200, 'Massage Épaules / Pieds')">S'offrir</button>
+                    </div>
+                    <div class="item-row">
+                        <div class="item-info"><h4>🍹 Barman à Domicile</h4><p>Service du cocktail/verre préféré servi au lit/salon</p><span>200</span></div>
+                        <button class="btn-action" onclick="buyReward(200, 'Barman à Domicile')">S'offrir</button>
+                    </div>
+                    <div class="item-row">
+                        <div class="item-info"><h4>🚗 Nettoyage de la Voiture</h4><p>Prise en charge de la voiture propre</p><span>250</span></div>
+                        <button class="btn-action" onclick="buyReward(250, 'Nettoyage de la Voiture')">S'offrir</button>
+                    </div>
+                    <div class="item-row">
+                        <div class="item-info"><h4>🧹 Joker "Zéro Corvée"</h4><p>L'autre gère toutes les tâches de la soirée</p><span>300</span></div>
+                        <button class="btn-action" onclick="buyReward(300, 'Joker Zéro Corvée')">S'offrir</button>
+                    </div>
+
+                    <!-- CATEGORIE 3 -->
+                    <div class="shop-category-title">🍷 Moments Amoureux & Évasions</div>
+                    <div class="item-row">
+                        <div class="item-info"><h4>🍷 Dîner Tête-à-Tête</h4><p>Resto ou repas maison aux chandelles</p><span>1500</span></div>
+                        <button class="btn-action" onclick="buyReward(1500, 'Dîner Tête-à-Tête')">S'offrir</button>
+                    </div>
+                    <div class="item-row">
+                        <div class="item-info"><h4>🎬 Rendez-vous Ciné & Repas</h4><p>Sortie en amoureux sans parler du quotidien</p><span>1800</span></div>
+                        <button class="btn-action" onclick="buyReward(1800, 'Rendez-vous Ciné & Repas')">S'offrir</button>
+                    </div>
+                    <div class="item-row">
+                        <div class="item-info"><h4>🏨 Nuit Hors de la Maison</h4><p>Coupure totale en amoureux (hôtel/gîte)</p><span>3500</span></div>
+                        <button class="btn-action" onclick="buyReward(3500, 'Nuit Hors de la Maison')">S'offrir</button>
+                    </div>
+                </div>
+
+                <!-- CATEGORIE SPÉCIALE : ZONE ROUGE & GRANDES ENVIES -->
+                <div class="card card-redzone">
+                    <h2 style="color: #ff1744; text-shadow: 0 0 15px rgba(255,23,68,0.8);">🔥 Zone Rouge • Grandes Envies</h2>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">Des jokers passionnés à sortir sans hésiter les jours de grande envie :</p>
+
+                    <div class="item-row">
+                        <div class="item-info">
+                            <h4>💋 Rapide & Brûlant</h4>
+                            <p>Un moment passionné et spontané dans la journée</p>
+                            <span style="color: #ff1744;">350</span>
+                        </div>
+                        <button class="btn-action" style="background: rgba(255,23,68,0.3); border-color: #ff1744; color: #fff;" onclick="buyReward(350, 'Rapide & Brûlant')">S'offrir 🔥</button>
+                    </div>
+
+                    <div class="item-row" style="margin-top: 8px;">
+                        <div class="item-info">
+                            <h4>🔞 Massage Érotique & Huiles</h4>
+                            <p>Massage intégral aux huiles axé sur la sensualité</p>
+                            <span style="color: #ff1744;">600</span>
+                        </div>
+                        <button class="btn-action" style="background: rgba(255,23,68,0.3); border-color: #ff1744; color: #fff;" onclick="buyReward(600, 'Massage Érotique & Huiles')">S'offrir 🔥</button>
+                    </div>
+
+                    <div class="item-row" style="margin-top: 8px;">
+                        <div class="item-info">
+                            <h4>🎭 Fantasme / Scénario Secret</h4>
+                            <p>Tester une idée, un jeu de rôle ou une envie choisie</p>
+                            <span style="color: #ff1744;">900</span>
+                        </div>
+                        <button class="btn-action" style="background: rgba(255,23,68,0.3); border-color: #ff1744; color: #fff;" onclick="buyReward(900, 'Fantasme / Scénario Secret')">S'offrir 🔥</button>
+                    </div>
+
+                    <div class="item-row" style="margin-top: 8px;">
+                        <div class="item-info">
+                            <h4>🗝️ Clés de la Chambre (Désir Total)</h4>
+                            <p>Prise en charge totale : l'autre pilote la soirée à 100%</p>
+                            <span style="color: #ff1744;">1500</span>
+                        </div>
+                        <button class="btn-action" style="background: rgba(255,23,68,0.3); border-color: #ff1744; color: #fff;" onclick="buyReward(1500, 'Clés de la Chambre (Désir Total)')">S'offrir 🔥</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ONGLET 4 : OFFRIR & HISTORIQUE -->
+            <div id="tab-gift" class="tab-content hidden">
+                <div class="card">
+                    <h2>✨ Offrir une enveloppe de points</h2>
+                    <div class="form-group"><label>Montant :</label><input type="number" id="gift-amount" value="15" min="1"></div>
+                    <div class="form-group"><label>Mot doux :</label><input type="text" id="gift-reason" placeholder="Ex: Hâte de ce soir..."></div>
+                    <button class="btn-primary" onclick="sendMysteryGift()">Envoyer l'enveloppe 💌</button>
+                </div>
+
+                <div class="card">
+                    <h2>📜 Journal des efforts</h2>
+                    <div class="history-list" id="history-box"><div class="history-item">Aucune action récente.</div></div>
+                </div>
+            </div>
+
+            <!-- NAVIGATION DU BAS -->
+            <nav class="bottom-nav">
+                <button class="nav-item active" onclick="switchTab('home', this)">
+                    <span style="font-size: 1.3rem;">🏠</span><span>Accueil</span>
+                </button>
+                <button class="nav-item" onclick="switchTab('play', this)">
+                    <span style="font-size: 1.3rem;">🎰</span><span>Jeux</span>
+                </button>
+                <button class="nav-item" onclick="switchTab('shop', this)">
+                    <span style="font-size: 1.3rem;">🎁</span><span>Boutique</span>
+                </button>
+                <button class="nav-item" onclick="switchTab('gift', this)">
+                    <span style="font-size: 1.3rem;">💌</span><span>Offrir</span>
+                </button>
+            </nav>
+
+        </div>
+    </div>
+
+    <!-- MODALE ANIMÉE -->
+    <div id="custom-modal" class="modal-overlay">
+        <div class="modal-card">
+            <div id="modal-icon" style="font-size: 3rem; margin-bottom: 12px;">💖</div>
+            <h3 id="modal-title" style="margin-top: 0; color: var(--text-main); font-size: 1.25rem;">Titre</h3>
+            <p id="modal-text" style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 24px; line-height: 1.5;">Message...</p>
+            <button class="btn-primary" onclick="closeModal()">C'est compris ✨</button>
+        </div>
+    </div>
+
+    <script>
+        // Version v30 - Intégration complète de la Zone Rouge & Grandes Envies
+        let db = JSON.parse(localStorage.getItem('lovemoney_pro_db_v30')) || {
+            maeva: { balance: 0, pin: null, lastSpin: null, spinCount: 0, lastMissions: {}, lastPollWeek: null, status: null, trophies: [], giftsCount: 0 },
+            greg: { balance: 0, pin: null, lastSpin: null, spinCount: 0, lastMissions: {}, lastPollWeek: null, status: null, trophies: [], giftsCount: 0 },
+            pending: [],
+            mysteryGifts: [],
+            history: []
+        };
+
+        let current = null;
+        let selectedProfileTemp = null;
+        let pinWorkflow = 'login';
+
+        const quotesPool = [
+            "\"Chaque jour est une nouvelle occasion de se redécouvrir.\" ✨",
+            "\"11 ans de complicité et toujours ce petit truc en plus...\" 🔥",
+            "\"Si on prenait 5 minutes ce soir juste pour se regarder ?\" 💋",
+            "\"L'amour se construit dans les plus petites attentions.\" ❤️",
+            "\"Un câlin silencieux vaut parfois tous les discours.\" 🛋️"
+        ];
+
+        function initDailyQuote() {
+            const dayOfYear = Math.floor(Date.now() / (1000 * 60 * 60 * 24));
+            document.getElementById('daily-quote').innerText = quotesPool[dayOfYear % quotesPool.length];
+        }
+        initDailyQuote();
+
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playSound(type) {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            if (type === 'spin') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(600, audioCtx.currentTime + 0.1);
+                gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.1);
+            } else if (type === 'success') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+                osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1);
+                osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.2);
+                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.4);
+            } else if (type === 'trophy') {
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+                osc.frequency.setValueAtTime(554.37, audioCtx.currentTime + 0.12);
+                osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.24);
+                osc.frequency.setValueAtTime(880, audioCtx.currentTime + 0.36);
+                gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.6);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.6);
+            }
+        }
+
+        function triggerVibration() {
+            if ("vibrate" in navigator) navigator.vibrate([40, 80, 40]);
+        }
+
+        function launchHeartConfetti() {
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart-particle';
+                heart.innerText = ['❤️', '🔥', '✨', '💖', '💋'][Math.floor(Math.random() * 5)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 1.5 + 1.5) + 's';
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 3000);
+            }
+        }
+
+        function showNotification(title, text, icon = '💖') {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-text').innerText = text;
+            document.getElementById('modal-icon').innerText = icon;
+            document.getElementById('custom-modal').classList.add('active');
+        }
+
+        function closeModal() { document.getElementById('custom-modal').classList.remove('active'); }
+
+        const trophiesDef = [
+            { id: 't1', title: "Premier Pas 🥉", desc: "Valider sa 1ère mission", reward: 10, icon: "🥉" },
+            { id: 't2', title: "Esprit Ouvert 🥉", desc: "Répondre à son 1er sondage", reward: 10, icon: "🥉" },
+            { id: 't3', title: "Ligne Chaude 🥈", desc: "Envoyer 3 enveloppes cadeaux", reward: 25, icon: "🥈" },
+            { id: 't4', title: "Roue de la Fortune 🥈", desc: "Tourner la roulette 5 fois", reward: 25, icon: "🎰" },
+            { id: 't5', title: "Grand Capital 🥇", desc: "Atteindre un solde de 300 Lovemoney", reward: 50, icon: "🥇" },
+            { id: 't6', title: "Légende du Sanctuaire 💎", desc: "Atteindre un solde de 1 000 Lovemoney", reward: 100, icon: "💎" }
+        ];
+
+        function checkTrophies() {
+            if (!current) return;
+            if (!db[current].trophies) db[current].trophies = [];
+
+            if (Object.keys(db[current].lastMissions || {}).length > 0) unlockTrophy('t1');
+            if (db[current].lastPollWeek !== null) unlockTrophy('t2');
+            if ((db[current].giftsCount || 0) >= 3) unlockTrophy('t3');
+            if ((db[current].spinCount || 0) >= 5) unlockTrophy('t4');
+            if (db[current].balance >= 300) unlockTrophy('t5');
+            if (db[current].balance >= 1000) unlockTrophy('t6');
+        }
+
+        function unlockTrophy(trophyId) {
+            if (db[current].trophies.includes(trophyId)) return;
+            const t = trophiesDef.find(item => item.id === trophyId);
+            if (!t) return;
+
+            db[current].trophies.push(trophyId);
+            db[current].balance += t.reward;
+            playSound('trophy');
+            triggerVibration();
+            launchHeartConfetti();
+            
+            showNotification(`🏆 TROPHÉE DÉBLOQUÉ !`, `${t.title}\n\n"${t.desc}"\n\n🎁 Bonus : +${t.reward} Lovemoney attribués !`, t.icon);
+            render();
+        }
+
+        function renderTrophiesUI() {
+            const container = document.getElementById('trophies-list');
+            if (!container || !current) return;
+            const userTrophies = db[current].trophies || [];
+
+            container.innerHTML = trophiesDef.map(t => {
+                const isUnlocked = userTrophies.includes(t.id);
+                return `
+                    <div class="trophy-row">
+                        <div class="trophy-icon">${t.icon}</div>
+                        <div class="trophy-info">
+                            <h4>${t.title}</h4>
+                            <p>${t.desc}</p>
+                        </div>
+                        <div class="trophy-badge ${isUnlocked ? 'unlocked' : ''}">
+                            ${isUnlocked ? `+${t.reward} pts ✔️` : `+${t.reward} pts`}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        const missionsPool = [
+            { id: 'm1', name: "Un compliment sincère les yeux dans les yeux", pts: 5, category: "Complicité" },
+            { id: 'm2', name: "S'embrasser plus de 10 secondes sans raison", pts: 10, category: "Séduction" },
+            { id: 'm3', name: "Envoyer un message brûlant/taquin en journée", pts: 10, category: "Séduction" },
+            { id: 'm4', name: "Prendre sur soi pour éviter une contrariété", pts: 5, category: "Zénitude" },
+            { id: 'm5', name: "Un regard insistant ou effleurement complice", pts: 5, category: "Séduction" }
+        ];
+
+        const pollsPool = [
+            { q: "Si on pouvait s'isoler 2h ce week-end, quelle serait ta priorité absolue ?", options: ["Un massage chaud et prolongé 🌶️", "Une sieste câline sans bruit 💤", "Partager un bon verre en tête-à-tête 🍷"] },
+            { q: "Quel type d'attention en journée te fait le plus plaisir ?", options: ["Un texto ou vocal évocateur 📱", "Une petite douceur surprise ☕", "Un appel juste pour entendre ma voix 📞"] }
+        ];
+
+        function getWeekNumber() {
+            const now = new Date();
+            const oneJan = new Date(now.getFullYear(), 0, 1);
+            return Math.ceil((((now - oneJan) / 86400000) + oneJan.getDay() + 1) / 7);
+        }
+
+        function setStatus(stKey) {
+            db[current].status = stKey;
+            playSound('success');
+            triggerVibration();
+            updateStatusUI();
+            render();
+            showNotification("État enregistré 🌡️", "L'autre verra ton état d'esprit du moment ! ✨", "👍");
+        }
+
+        function updateStatusUI() {
+            if (!current) return;
+            const statuses = ['forme', 'fatigue', 'epuise', 'triste', 'coquin', 'solitude', 'amour'];
+            statuses.forEach(s => {
+                const btn = document.getElementById(`st-${s}`);
+                if (btn) btn.classList.remove('active');
+            });
+            if (db[current].status) {
+                const activeBtn = document.getElementById(`st-${db[current].status}`);
+                if (activeBtn) activeBtn.classList.add('active');
+            }
+
+            const partner = current === 'maeva' ? 'greg' : 'maeva';
+            const partnerName = current === 'maeva' ? 'Grégory' : 'Maëva';
+            const lbl = document.getElementById('partner-status-lbl');
+
+            const statusLabels = {
+                forme: '⚡ En forme', fatigue: '🔋 Fatigué(e)', epuise: '💤 Épuisé(e)',
+                triste: '🌧️ Triste / "Bof"', coquin: '🔥 Coquin(e)', solitude: '🧘 Besoin de solitude',
+                amour: '❤️ Besoin d\'amour & douceur'
+            };
+
+            if (db[partner] && db[partner].status) {
+                lbl.innerText = `${partnerName} se sent : ${statusLabels[db[partner].status]}`;
+            } else {
+                lbl.innerText = `${partnerName} n'a pas encore indiqué son état.`;
+            }
+        }
+
+        function updatePersonalMissionButtons() {
+            if (!current) return;
+            const today = new Date().toDateString();
+            if (!db[current].lastMissions) db[current].lastMissions = {};
+
+            ['drink', 'chore', 'note'].forEach(m => {
+                const btn = document.getElementById(`btn-m-${m}`);
+                if (btn) {
+                    if (db[current].lastMissions[m] === today) {
+                        btn.disabled = true;
+                        btn.innerText = "Fait ✔️";
+                    } else {
+                        btn.disabled = false;
+                        btn.innerText = "Valider";
+                    }
+                }
+            });
+        }
+
+        function initPoll() {
+            const currentWeek = getWeekNumber();
+            const poll = pollsPool[currentWeek % pollsPool.length];
+            document.getElementById('poll-question').innerText = poll.q;
+            
+            const container = document.getElementById('poll-options');
+            if (current && db[current].lastPollWeek === currentWeek) {
+                container.innerHTML = `<p style="color:var(--accent); font-weight:600; font-size:0.9rem; text-align:center;">Sondage de la semaine accompli ! (+15 pts) ✨</p>`;
+            } else {
+                container.innerHTML = poll.options.map((opt, index) => `
+                    <button class="btn-action" style="text-align: left; padding: 12px 14px;" onclick="answerPoll(${index})">${opt}</button>
+                `).join('');
+            }
+        }
+
+        function answerPoll(idx) {
+            const currentWeek = getWeekNumber();
+            db[current].lastPollWeek = currentWeek;
+            db[current].balance += 15;
+            playSound('success');
+            launchHeartConfetti();
+            const name = current === 'maeva' ? 'Maëva' : 'Grégory';
+            db.history.unshift({ date: getTime(), text: `💬 <strong>${name}</strong> a répondu au sondage (+15 pts)` });
+            initPoll();
+            checkTrophies();
+            render();
+            showNotification("Sondage accompli ! 💬", "+15 Lovemoney ajoutés à ton solde ! ✨", "🎉");
+        }
+
+        function initDailyMissions() {
+            const dayOfYear = Math.floor(Date.now() / (1000 * 60 * 60 * 24));
+            const m1 = missionsPool[dayOfYear % missionsPool.length];
+            const m2 = missionsPool[(dayOfYear + 2) % missionsPool.length];
+            const selected = [m1, m2];
+
+            const container = document.getElementById('daily-missions-container');
+            container.innerHTML = selected.map(m => `
+                <div class="item-row">
+                    <div class="item-info">
+                        <h4>${m.name}</h4>
+                        <p>Catégorie : ${m.category}</p>
+                        <span>+${m.pts} pts</span>
+                    </div>
+                    <button id="btn-m-${m.id}" class="btn-action" onclick="completeDirectMission('${m.id}', '${m.name.replace(/'/g, "\\'")}', ${m.pts})">Valider</button>
+                </div>
+            `).join('');
+
+            updatePersonalMissionButtons();
+        }
+
+        function updateCounter() {
+            const startDate = new Date('2015-03-26');
+            const now = new Date();
+            startDate.setHours(0, 0, 0, 0); now.setHours(0, 0, 0, 0);
+            const diffDays = Math.ceil(Math.abs(now - startDate) / (1000 * 60 * 60 * 24));
+            document.getElementById('couple-counter').innerText = `${diffDays} jours d'histoire (depuis le 26 mars 2015)`;
+        }
+        updateCounter();
+
+        function switchTab(tabId, btnElement) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            btnElement.classList.add('active');
+        }
+
+        function selectProfile(user) {
+            selectedProfileTemp = user;
+            document.getElementById('screen-login').classList.add('hidden');
+            document.getElementById('screen-pin').classList.remove('hidden');
+            document.getElementById('pin-input').value = '';
+            document.getElementById('pin-input').focus();
+
+            if (!db[user].pin) {
+                pinWorkflow = 'setup';
+                document.getElementById('pin-title').innerText = `Crée ton code PIN`;
+                document.getElementById('pin-subtitle').innerText = `Protège ton espace.`;
+            } else {
+                pinWorkflow = 'login';
+                document.getElementById('pin-title').innerText = `Code PIN`;
+                document.getElementById('pin-subtitle').innerText = `Sanctuaire de ${user === 'maeva' ? 'Maëva' : 'Grégory'}`;
+            }
+        }
+
+        function openPinChange() {
+            pinWorkflow = 'change';
+            document.getElementById('screen-app').classList.add('hidden');
+            document.getElementById('screen-pin').classList.remove('hidden');
+            document.getElementById('pin-title').innerText = `Nouveau PIN`;
+            document.getElementById('pin-input').value = '';
+        }
+
+        function backToLogin() {
+            selectedProfileTemp = null;
+            document.getElementById('screen-pin').classList.add('hidden');
+            document.getElementById('screen-login').classList.remove('hidden');
+        }
+
+        function submitPin() {
+            const enteredPin = document.getElementById('pin-input').value.trim();
+            if (!enteredPin) return;
+
+            if (pinWorkflow === 'setup') {
+                db[selectedProfileTemp].pin = enteredPin;
+                activateApp(selectedProfileTemp);
+            } else if (pinWorkflow === 'login') {
+                if (enteredPin === db[selectedProfileTemp].pin) activateApp(selectedProfileTemp);
+                else { showNotification("Erreur", "PIN incorrect.", "❌"); document.getElementById('pin-input').value = ''; }
+            } else if (pinWorkflow === 'change') {
+                db[current].pin = enteredPin;
+                showNotification("Sécurité", "Code PIN modifié ! 🔒", "✅");
+                activateApp(current);
+            }
+        }
+
+        function activateApp(user) {
+            current = user;
+            selectedProfileTemp = null;
+            document.getElementById('screen-pin').classList.add('hidden');
+            document.getElementById('screen-app').classList.remove('hidden');
+            document.getElementById('lbl-username').innerText = user === 'maeva' ? 'Maëva' : 'Grégory';
+            document.body.className = user === 'maeva' ? 'theme-maeva' : 'theme-greg';
+            checkSpinAvailability();
+            initDailyMissions();
+            initPoll();
+            updateStatusUI();
+            checkTrophies();
+            render();
+        }
+
+        function logout() {
+            current = null;
+            document.getElementById('screen-app').classList.add('hidden');
+            document.getElementById('screen-login').classList.remove('hidden');
+        }
+
+        function triggerSos() {
+            const name = current === 'maeva' ? 'Maëva' : 'Grégory';
+            db.pending.push({
+                id: Date.now(), author: current, authorName: name,
+                target: current === 'maeva' ? 'greg' : 'maeva', pts: 15,
+                title: "🚨 SOS RÉSOLUTION DE CRISE : Soirée sans écran ni bouderie !",
+                needsPointsInput: false
+            });
+            playSound('success');
+            render();
+            showNotification("SOS Lancé 🚨", "Alerte envoyée à l'autre. RDV ce soir ! ❤️", "❤️");
+        }
+
+        function checkSpinAvailability() {
+            const today = new Date().toDateString();
+            const btnSpin = document.getElementById('btn-spin');
+            const spinWarning = document.getElementById('spin-warning');
+            if (db[current].lastSpin === today) {
+                btnSpin.disabled = true; btnSpin.style.opacity = "0.5"; spinWarning.classList.remove('hidden');
+            } else {
+                btnSpin.disabled = false; btnSpin.style.opacity = "1"; spinWarning.classList.add('hidden');
+            }
+        }
+
+        function render() {
+            if (!current) return;
+            document.getElementById('lbl-balance').innerText = db[current].balance;
+
+            const giftSection = document.getElementById('gift-section');
+            const giftList = document.getElementById('gift-list');
+            const myGifts = db.mysteryGifts.filter(g => g.target === current);
+            if (myGifts.length > 0) {
+                giftSection.classList.remove('hidden');
+                giftList.innerHTML = myGifts.map(g => `
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+                        <span>💌 De <strong>${g.authorName}</strong> (+${g.amt})</span>
+                        <button class="btn-action" style="background:#ffb703; color:#000; border:none;" onclick="openMysteryGift(${g.id})">Ouvrir 🎁</button>
+                    </div>
+                `).join('');
+            } else giftSection.classList.add('hidden');
+
+            const pendingSection = document.getElementById('pending-section');
+            const pendingList = document.getElementById('pending-list');
+            const myPending = db.pending.filter(p => p.target === current);
+            if (myPending.length > 0) {
+                pendingSection.classList.remove('hidden');
+                pendingList.innerHTML = myPending.map((p) => `
+                    <div style="display:flex; flex-direction:column; gap:6px; margin-bottom:10px; border-bottom:1px dashed rgba(255,255,255,0.1); padding-bottom:8px;">
+                        <span><strong>${p.authorName}</strong> : "${p.title}"</span>
+                        <div style="display:flex; width:100%; justify-content:space-between; align-items:center;">
+                            ${p.needsPointsInput ? `
+                                <div style="display:flex; gap:6px; align-items:center;">
+                                    <input type="number" id="pts-input-${p.id}" placeholder="Pts" min="1" max="25" style="width:70px; padding:6px;">
+                                    <button class="btn-action" onclick="validateCustom(${p.id})">Valider ❤️</button>
+                                </div>
+                            ` : `
+                                <span style="font-size:0.85rem; color:var(--primary); font-weight:bold;">+${p.pts} pts</span>
+                                <button class="btn-action" onclick="validatePending(${p.id})">Valider ❤️</button>
+                            `}
+                        </div>
+                    </div>
+                `).join('');
+            } else pendingSection.classList.add('hidden');
+
+            const box = document.getElementById('history-box');
+            box.innerHTML = db.history.length === 0 ? '<div class="history-item">Aucune action récente.</div>' : db.history.map(h => `<div class="history-item"><strong>${h.date}</strong> : ${h.text}</div>`).join('');
+
+            updatePersonalMissionButtons();
+            renderTrophiesUI();
+            localStorage.setItem('lovemoney_pro_db_v30', JSON.stringify(db));
+        }
+
+        function getTime() { return new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }); }
+
+        function completeDirectMission(missionKey, missionName, pts) {
+            const today = new Date().toDateString();
+            if (!db[current].lastMissions) db[current].lastMissions = {};
+            if (db[current].lastMissions[missionKey] === today) { showNotification("Déjà fait !", "Déjà validé aujourd'hui ! 😉", "⚠️"); return; }
+
+            db[current].lastMissions[missionKey] = today;
+            db[current].balance += pts;
+            playSound('success');
+            triggerVibration();
+            launchHeartConfetti();
+
+            const name = current === 'maeva' ? 'Maëva' : 'Grégory';
+            db.history.unshift({ date: getTime(), text: `✨ <strong>${name}</strong> a validé : "${missionName}" (+${pts} pts)` });
+            
+            initDailyMissions();
+            checkTrophies();
+            render();
+            showNotification("Mission validée ! 🎉", `+${pts} Lovemoney ajoutés ! ✨`, "💪");
+        }
+
+        function submitCustomMission() {
+            const text = document.getElementById('custom-mission-text').value.trim();
+            if (!text) return;
+            const name = current === 'maeva' ? 'Maëva' : 'Grégory';
+            db.pending.push({ id: Date.now(), author: current, authorName: name, target: current === 'maeva' ? 'greg' : 'maeva', pts: 0, title: text, needsPointsInput: true });
+            playSound('success');
+            render(); showNotification("Envoyé", "L'autre va évaluer cet effort. ✨", "✨");
+            document.getElementById('custom-mission-text').value = '';
+        }
+
+        function spinRoulette() {
+            db[current].lastSpin = new Date().toDateString();
+            db[current].spinCount = (db[current].spinCount || 0) + 1;
+            checkSpinAvailability();
+            
+            let spinInterval = setInterval(() => playSound('spin'), 200);
+
+            const wheel = document.getElementById('roulette-wheel');
+            wheel.style.transform = `rotate(${Math.floor(Math.random() * 360) + 1800}deg)`;
+
+            setTimeout(() => {
+                clearInterval(spinInterval);
+                playSound('success');
+                launchHeartConfetti();
+                triggerVibration();
+
+                const outcomes = [
+                    { val: 15, text: '🎁 Jackpot passion ! +15 Lovemoney' },
+                    { val: 10, text: '✨ Bonus de soutien ! +10 Lovemoney' },
+                    { val: 5, text: '🔥 Gage : Un câlin serré de 3 min sans parler (+5 pts)' },
+                    { val: 5, text: '💋 Gage : Un baiser passionné de 60 secondes (+5 pts)' }
+                ];
+                const res = outcomes[Math.floor(Math.random() * outcomes.length)];
+                db.pending.push({ id: Date.now(), author: current, authorName: current === 'maeva' ? 'Maëva' : 'Grégory', target: current === 'maeva' ? 'greg' : 'maeva', pts: res.val, title: `Roulette : ${res.text}`, needsPointsInput: false });
+                checkTrophies();
+                render(); showNotification("Résultat 🎡", res.text, "🎰");
+            }, 4500);
+        }
+
+        function validatePending(id) {
+            const idx = db.pending.findIndex(p => p.id === id);
+            if (idx !== -1) {
+                const item = db.pending[idx];
+                db[item.author].balance += item.pts;
+                playSound('success');
+                launchHeartConfetti();
+                db.history.unshift({ date: getTime(), text: `✅ <strong>${item.authorName === 'Maëva' ? 'Grégory' : 'Maëva'}</strong> a validé : "${item.title}" (+${item.pts})` });
+                db.pending.splice(idx, 1);
+                checkTrophies();
+                render();
+                showNotification("Validé !", "Points crédités ! ❤️", "✅");
+            }
+        }
+
+        function validateCustom(id) {
+            const pts = parseInt(document.getElementById(`pts-input-${id}`).value);
+            if (isNaN(pts) || pts <= 0) return;
+            const idx = db.pending.findIndex(p => p.id === id);
+            if (idx !== -1) {
+                const item = db.pending[idx];
+                db[item.author].balance += pts;
+                playSound('success');
+                launchHeartConfetti();
+                db.history.unshift({ date: getTime(), text: `✅ Validé : "${item.title}" (+${pts} pts)` });
+                db.pending.splice(idx, 1);
+                checkTrophies();
+                render();
+                showNotification("Validé !", `Mission validée avec ${pts} Lovemoney ! ❤️`, "✅");
+            }
+        }
+
+        function sendMysteryGift() {
+            const amt = parseInt(document.getElementById('gift-amount').value);
+            const reason = document.getElementById('gift-reason').value || "Soutien mutuel";
+            if (isNaN(amt) || amt <= 0 || db[current].balance < amt) return;
+            
+            db[current].balance -= amt;
+            db[current].giftsCount = (db[current].giftsCount || 0) + 1;
+            db.mysteryGifts.push({ id: Date.now(), authorName: current === 'maeva' ? 'Maëva' : 'Grégory', target: current === 'maeva' ? 'greg' : 'maeva', amt, reason });
+            playSound('success');
+            checkTrophies();
+            render(); showNotification("Enveloppe envoyée 💌", "Transmis à l'autre ! ❤️", "💌");
+            document.getElementById('gift-reason').value = '';
+        }
+
+        function openMysteryGift(id) {
+            const idx = db.mysteryGifts.findIndex(g => g.id === id);
+            if (idx !== -1) {
+                const g = db.mysteryGifts[idx];
+                db[current].balance += g.amt;
+                playSound('success');
+                launchHeartConfetti();
+                db.history.unshift({ date: getTime(), text: `💌 ${g.authorName} a offert une enveloppe à ${current === 'maeva' ? 'Maëva' : 'Grégory'} (+${g.amt})` });
+                db.mysteryGifts.splice(idx, 1);
+                checkTrophies();
+                render();
+                showNotification("SURPRISE 🎁", `+${g.amt} Lovemoney !\nMotif : "${g.reason}" ❤️`, "🎁");
+            }
+        }
+
+        function buyReward(cost, title) {
+            const name = current === 'maeva' ? 'Maëva' : 'Grégory';
+            if (db[current].balance >= cost) {
+                db[current].balance -= cost;
+                playSound('success');
+                launchHeartConfetti();
+                db.history.unshift({ date: getTime(), text: `🎉 ${name} s'est offert(e) : "${title}" (-${cost})` });
+                render(); showNotification("Cadeau validé ! 🎉", `Profitez à fond : "${title}". Bon moment à vous deux ! ✨`, "🍷");
+            } else { showNotification("Solde insuffisant", "Il te manque quelques Lovemoney ! 😉", "💤"); }
+        }
+    </script>
+</body>
+</html>
